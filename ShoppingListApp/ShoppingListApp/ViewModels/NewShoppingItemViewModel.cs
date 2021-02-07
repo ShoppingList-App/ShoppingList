@@ -9,7 +9,7 @@ namespace ShoppingListApp.ViewModels
     class NewShoppingItemViewModel : BaseShoppingListViewModel
     {
         private string text;
-        private int amount;
+        private uint amount;
         private string unit;
 
         public Command SaveCommand { get; }
@@ -29,7 +29,7 @@ namespace ShoppingListApp.ViewModels
             get => text;
             set => SetProperty(ref text, value);
         }
-        public int Amount
+        public uint Amount
         {
             get => amount;
             set => SetProperty(ref amount, value);
@@ -46,6 +46,7 @@ namespace ShoppingListApp.ViewModels
         private bool ValidateSave()
         {
             return !string.IsNullOrWhiteSpace(Text)
+                && Amount > 0
                 && !string.IsNullOrWhiteSpace(Unit);
         }
 

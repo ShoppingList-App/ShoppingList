@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingListApp.Views.NewShoppingItemPage"
-             xmlns:model="clr-namespace:ShoppingListApp.Models"  
+             xmlns:model="clr-namespace:ShoppingListApp.Models"
              Title="{Binding Title}">
 
     <ContentPage.Content>
@@ -10,17 +10,14 @@
             <Label Text="Text" FontSize="Medium" />
             <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
             <Label Text="Amount" FontSize="Medium" />
-            <Entry Text="{Binding Amount, Mode=TwoWay}" Keyboard="Numeric"/>
-            <Picker SelectedItem="{Binding Unit, Mode=TwoWay}">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Einzel</x:String>
-                        <x:String>Fass</x:String>
-                        <x:String>Kiste</x:String>
-                        <x:String>Stiege</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+            <Grid Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Entry Text="{Binding Amount, Mode=TwoWay}" Keyboard="Numeric"/>
+                <Picker ItemsSource="{Binding Source={x:Static model:StaticValues.Units}}" SelectedItem="{Binding Unit, Mode=TwoWay}" Grid.Column="1"/>
+            </Grid>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
