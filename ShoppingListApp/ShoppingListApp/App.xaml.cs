@@ -13,7 +13,7 @@ namespace ShoppingListApp
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<MockShoppingListDataStore>();
             MainPage = new AppShell();
         }
 

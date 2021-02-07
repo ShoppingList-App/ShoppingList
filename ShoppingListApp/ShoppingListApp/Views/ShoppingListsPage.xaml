@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingListApp.ViewModels"  
+             xmlns:model="clr-namespace:ShoppingListApp.Models"  
+             x:Class="ShoppingListApp.Views.ShoppingListsPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddShoppingListCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView x:DataType="local:ShoppingListsViewModel" Command="{Binding LoadShoppingListsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ShoppingListsView"
+                ItemsSource="{Binding ShoppingLists}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="model:ShoppingList" Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding Text}"
+                               Padding="10,0,0,0"
+                               LineBreakMode="NoWrap" 
+                               Style="{StaticResource LabelButton}" 
+                               VerticalTextAlignment="Center"/>
+                        <Grid.GestureRecognizers IsEnabled="{Binding DeleteButtonIsEnabled}">
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingListsViewModel}}, Path=ShoppingListTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                    
+                    <!--<StackLayout x:DataType="model:ShoppingList">
+                        <Label Text="{Binding Text}"
+                               Padding="10,0,0,0"
+                               HeightRequest="100"
+                               BackgroundColor="{StaticResource Primary}"
+                               TextColor="{StaticResource ButtonTextColor}"
+                               LineBreakMode="NoWrap" 
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               VerticalTextAlignment="Center"
+                               FontSize="16"
+                               Grid.Row="0"
+                               Grid.Column="0"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingListsViewModel}}, Path=ShoppingListTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>-->
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

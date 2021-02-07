@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseShoppingListViewModel
     {
         public Command LoginCommand { get; }
 

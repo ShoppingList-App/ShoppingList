@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingListApp.ViewModels"  
+             xmlns:model="clr-namespace:ShoppingListApp.Models"  
+             x:Class="ShoppingListApp.Views.ShoppingListPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddShoppingItemCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView x:DataType="local:ShoppingListViewModel" Command="{Binding LoadShoppingItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ShoppingListView"
+                ItemsSource="{Binding ShoppingItems}"
+                SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="nichts"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="model:ShoppingItem" Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding Text}"
+                               Padding="10,0,0,0"
+                               BackgroundColor="{StaticResource Primary}"
+                               TextColor="{StaticResource ButtonTextColor}"
+                               LineBreakMode="NoWrap" 
+                               Style="{StaticResource LabelButton}" 
+                               VerticalTextAlignment="Center"/>
+                        <Label Text="{Binding Amount}" 
+                               BackgroundColor="{StaticResource Primary}"
+                               TextColor="{StaticResource ButtonTextColor}"
+                               LineBreakMode="NoWrap" 
+                               Style="{StaticResource LabelButton}"
+                               VerticalTextAlignment="Center"
+                               Grid.Column="1"/>
+                        <Grid.GestureRecognizers IsEnabled="{Binding DeleteButtonIsEnabled}">
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingListViewModel}}, Path=RemoveShoppingItemCommand}"
+                                CommandParameter="{Binding Id}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class AboutViewModel : BaseShoppingListViewModel
     {
         public AboutViewModel()
         {

@@ -1,29 +1,26 @@
 ﻿using ShoppingListApp.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
 {
-    public class NewItemViewModel : BaseViewModel
+    class NewShoppingListViewModel : BaseShoppingListViewModel
     {
-        private string text;
-        private string description;
+        private String text;
+        private String description;
 
-        public NewItemViewModel()
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
+
+        public NewShoppingListViewModel()
         {
+            Title = "New Shopping List";
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
-        }
 
-        private bool ValidateSave()
-        {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
+            // erzeugt eine neue Funktion die zu PropertyChangedEventHandler passt und ruft darun SaveCommand.ChangeCanExecute auf => WTF????
+            PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
         }
 
         public string Text
@@ -31,15 +28,17 @@ namespace ShoppingListApp.ViewModels
             get => text;
             set => SetProperty(ref text, value);
         }
-
         public string Description
         {
             get => description;
             set => SetProperty(ref description, value);
         }
 
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
+        private bool ValidateSave()
+        {
+            return !String.IsNullOrWhiteSpace(Text)
+                && !String.IsNullOrWhiteSpace(Description);
+        }
 
         private async void OnCancel()
         {
@@ -49,17 +48,17 @@ namespace ShoppingListApp.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            ShoppingList newShoppingList = new ShoppingList()
             {
                 Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
+                Text = Text
             };
 
-            await DataStore.AddItemAsync(newItem);
+            _ = await DataStore.AddShoppingListAsync(newShoppingList);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
+
     }
 }
