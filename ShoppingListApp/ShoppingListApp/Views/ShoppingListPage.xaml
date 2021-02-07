@@ -31,7 +31,7 @@
                                LineBreakMode="NoWrap" 
                                Style="{StaticResource LabelButton}" 
                                VerticalTextAlignment="Center"/>
-                        <Label Text="{Binding Amount}" 
+                        <Label Text="{Binding AmountDisplay}" 
                                BackgroundColor="{StaticResource Primary}"
                                TextColor="{StaticResource ButtonTextColor}"
                                LineBreakMode="NoWrap" 

@@ -15,16 +15,16 @@ namespace ShoppingListApp.Services
             shoppingLists = new List<ShoppingList>()
             {
                 new ShoppingList { Id = Guid.NewGuid().ToString(), Text = "First List", Items = new List<ShoppingItem>() {
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 1", Amount = "89zhasdfg" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 2", Amount = "4565" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 3", Amount = "fvbdf" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 4", Amount = "4545rt" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 1", Amount = 1, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 2", Amount = 2, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 3", Amount = 3, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "First Item 4", Amount = 4, Unit = "Foo" },
                 } },
                 new ShoppingList { Id = Guid.NewGuid().ToString(), Text = "Second List", Items = new List<ShoppingItem>() {
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 1", Amount = "89zhasdfg" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 2", Amount = "4565" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 3", Amount = "fvbdf" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 4", Amount = "4545rt" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 1", Amount = 5, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 2", Amount = 6, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 3", Amount = 7, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 4", Amount = 8, Unit = "Foo" },
                 } }
             };
         }

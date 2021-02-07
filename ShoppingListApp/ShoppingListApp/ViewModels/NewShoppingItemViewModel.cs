@@ -8,8 +8,9 @@ namespace ShoppingListApp.ViewModels
     [QueryProperty("ShoppingListId", "ShoppingListId")]
     class NewShoppingItemViewModel : BaseShoppingListViewModel
     {
-        private String text;
-        private String amount;
+        private string text;
+        private int amount;
+        private string unit;
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
@@ -28,10 +29,16 @@ namespace ShoppingListApp.ViewModels
             get => text;
             set => SetProperty(ref text, value);
         }
-        public string Amount
+        public int Amount
         {
             get => amount;
             set => SetProperty(ref amount, value);
+        }
+
+        public string Unit
+        {
+            get => unit;
+            set => SetProperty(ref unit, value);
         }
 
         public string ShoppingListId { get; set; }
@@ -39,7 +46,7 @@ namespace ShoppingListApp.ViewModels
         private bool ValidateSave()
         {
             return !string.IsNullOrWhiteSpace(Text)
-                && !string.IsNullOrWhiteSpace(Amount);
+                && !string.IsNullOrWhiteSpace(Unit);
         }
 
         private async void OnCancel()
@@ -54,7 +61,8 @@ namespace ShoppingListApp.ViewModels
             {
                 Id = Guid.NewGuid().ToString(),
                 Text = Text,
-                Amount = Amount
+                Amount = Amount,
+                Unit = Unit
             };
 
             _ = await DataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
