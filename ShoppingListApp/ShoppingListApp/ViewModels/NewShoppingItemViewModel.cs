@@ -1,6 +1,7 @@
 ﻿using ShoppingListApp.Models;
 using ShoppingListApp.ViewModels;
 using System;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
@@ -23,6 +24,8 @@ namespace ShoppingListApp.ViewModels
 
             // erzeugt eine neue Funktion die zu PropertyChangedEventHandler passt und ruft darun SaveCommand.ChangeCanExecute auf => WTF????
             PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
+
+            unit = StaticValues.Units.First();
         }
         public string Text
         {

@@ -8,6 +8,6 @@ namespace ShoppingListApp.Models
     {
         public string Id { get; set; }
         public string Text { get; set; }
-        public List<ShoppingItem> Items { get; set; }
+        public List<ShoppingItem> Items { get; set; } = new List<ShoppingItem>();
     }
 }

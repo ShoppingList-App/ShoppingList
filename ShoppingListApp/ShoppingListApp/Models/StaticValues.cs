@@ -8,7 +8,8 @@ namespace ShoppingListApp.Models
     {
         public static List<string> Units => new List<string>()
         {
-            "Einzel",
+            "VE",
+            "Bund",
             "Fass",
             "Flasche",
             "Kiste",

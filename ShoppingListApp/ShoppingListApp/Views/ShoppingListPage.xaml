@@ -28,9 +28,9 @@
                                Padding="10,0,0,0"
                                BackgroundColor="{StaticResource Primary}"
                                TextColor="{StaticResource ButtonTextColor}"
-                               LineBreakMode="NoWrap" 
                                Style="{StaticResource LabelButton}" 
-                               VerticalTextAlignment="Center"/>
+                               VerticalTextAlignment="Center"
+                               LineBreakMode="WordWrap"/>
                         <Label Text="{Binding AmountDisplay}" 
                                BackgroundColor="{StaticResource Primary}"
                                TextColor="{StaticResource ButtonTextColor}"
