@@ -33,7 +33,7 @@ namespace ShoppingListApp.ViewModels
             try
             {
                 ShoppingLists.Clear();
-                System.Collections.Generic.IEnumerable<ShoppingList> items = await DataStore.GetShoppingListsAsync();
+                System.Collections.Generic.IEnumerable<ShoppingList> items = await ShoppingListDataStore.GetShoppingListsAsync();
                 foreach (ShoppingList item in items)
                 {
                     ShoppingLists.Add(item);

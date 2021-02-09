@@ -43,7 +43,7 @@ namespace ShoppingListApp.ViewModels
             try
             {
                 ShoppingItems.Clear();
-                System.Collections.Generic.IEnumerable<ShoppingItem> items = await DataStore.GetShoppingItemsAsync(shoppingListId);
+                System.Collections.Generic.IEnumerable<ShoppingItem> items = await ShoppingListDataStore.GetShoppingItemsAsync(shoppingListId);
                 foreach (ShoppingItem item in items)
                 {
                     ShoppingItems.Add(item);
@@ -82,7 +82,7 @@ namespace ShoppingListApp.ViewModels
         {
             try
             {
-                ShoppingList item = await DataStore.GetShoppingListAsync(shoppingListId);
+                ShoppingList item = await ShoppingListDataStore.GetShoppingListAsync(shoppingListId);
                 Id = item.Id;
                 Text = item.Text;
                 Title = item.Text;
@@ -102,7 +102,7 @@ namespace ShoppingListApp.ViewModels
         {
             if (shoppingItemId is string @sii)
             {
-                ShoppingItem shoppingItem = await DataStore.RemoveShoppingListItemAsync(ShoppingListId, @sii);
+                ShoppingItem shoppingItem = await ShoppingListDataStore.RemoveShoppingListItemAsync(ShoppingListId, @sii);
                 _ = ShoppingItems.Remove(shoppingItem);
             }
         }

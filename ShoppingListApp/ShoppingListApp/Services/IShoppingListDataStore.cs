@@ -9,9 +9,14 @@ namespace ShoppingListApp.Services
         Task<IEnumerable<ShoppingList>> GetShoppingListsAsync();
         Task<ShoppingList> GetShoppingListAsync(string shoppingListId);
         Task<IEnumerable<ShoppingItem>> GetShoppingItemsAsync(string shoppingListId);
+        Task<StoreItem> GetStoreItemAsync(string itemId);
+        Task<IEnumerable<StoreItem>> GetStoreItemsAsync();
 
-        Task<bool> AddShoppingListAsync(ShoppingList shoppingList);
-        Task<bool> AddShoppingItemAsync(string shoppingListId, ShoppingItem shoppingItem);
+        Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text);
+
+        Task<string> AddShoppingListAsync(ShoppingList shoppingList);
+        Task<string> AddShoppingItemAsync(string shoppingListId, ShoppingItem shoppingItem);
+        Task<string> AddStoreItemAsync(StoreItem storeItem);
 
         Task<ShoppingItem> RemoveShoppingListItemAsync(string shoppingListId, string shoppingItemId);
     }

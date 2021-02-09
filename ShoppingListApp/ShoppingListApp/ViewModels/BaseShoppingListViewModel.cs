@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
@@ -9,7 +10,7 @@ namespace ShoppingListApp.ViewModels
 {
     public class BaseShoppingListViewModel : INotifyPropertyChanged
     {
-        public IShoppingListDataStore DataStore => DependencyService.Get<IShoppingListDataStore>();
+        protected IShoppingListDataStore ShoppingListDataStore => DependencyService.Get<IShoppingListDataStore>();
 
         private bool isBusy = false;
         public bool IsBusy

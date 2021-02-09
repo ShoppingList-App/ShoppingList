@@ -50,11 +50,10 @@ namespace ShoppingListApp.ViewModels
         {
             ShoppingList newShoppingList = new ShoppingList()
             {
-                Id = Guid.NewGuid().ToString(),
                 Text = Text
             };
 
-            _ = await DataStore.AddShoppingListAsync(newShoppingList);
+            _ = await ShoppingListDataStore.AddShoppingListAsync(newShoppingList);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

@@ -1,6 +1,7 @@
 ﻿using ShoppingListApp.Models;
 using ShoppingListApp.ViewModels;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -9,9 +10,12 @@ namespace ShoppingListApp.ViewModels
     [QueryProperty("ShoppingListId", "ShoppingListId")]
     class NewShoppingItemViewModel : BaseShoppingListViewModel
     {
+        private StoreItem selectedStoreItem;
         private string text;
         private uint amount;
         private string unit;
+
+        public ObservableCollection<StoreItem> StoreItems { get; }
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
@@ -26,12 +30,38 @@ namespace ShoppingListApp.ViewModels
             PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
 
             unit = StaticValues.Units.First();
+
+            StoreItems = new ObservableCollection<StoreItem>();
+            LoadStoreItems();
         }
+
+        private void LoadStoreItems()
+        {
+            StoreItems.Clear();
+            System.Collections.Generic.IEnumerable<StoreItem> items = ShoppingListDataStore.GetStoreItemsAsync().Result;
+            foreach (StoreItem item in items)
+            {
+                StoreItems.Add(item);
+            }
+        }
+
+        public StoreItem SelectedStoreItem
+        {
+            get => selectedStoreItem;
+            set
+            {
+                selectedStoreItem = value;
+                Text = value.Text;
+                Unit = value.Unit;
+            }
+        }
+
         public string Text
         {
             get => text;
             set => SetProperty(ref text, value);
         }
+
         public uint Amount
         {
             get => amount;
@@ -61,15 +91,28 @@ namespace ShoppingListApp.ViewModels
 
         private async void OnSave()
         {
+            string storeItemId;
+            if (selectedStoreItem != null && selectedStoreItem.Text == Text)
+            {
+                storeItemId = selectedStoreItem.Id;
+            }
+            else
+            {
+                StoreItem storeItem = new StoreItem()
+                {
+                    Text = Text,
+                    Unit = Unit
+                };
+                storeItemId = await ShoppingListDataStore.AddStoreItemAsync(storeItem);
+            }
+
             ShoppingItem shoppingItem = new ShoppingItem()
             {
-                Id = Guid.NewGuid().ToString(),
-                Text = Text,
+                StoreItemId = storeItemId,
                 Amount = Amount,
                 Unit = Unit
             };
-
-            _ = await DataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
+            _ = await ShoppingListDataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}");
