@@ -15,6 +15,7 @@ namespace ShoppingListApp.ViewModels
         public Command LoadShoppingListsCommand { get; }
         public Command AddShoppingListCommand { get; }
         public Command<ShoppingList> ShoppingListTapped { get; }
+        public Command<ShoppingList> RemoveShoppingList { get; }
 
         public ShoppingListsViewModel()
         {
@@ -23,6 +24,7 @@ namespace ShoppingListApp.ViewModels
 
             LoadShoppingListsCommand = new Command(async () => await ExecuteLoadShoppingListsCommand());
             ShoppingListTapped = new Command<ShoppingList>(OnShoppingListSelected);
+            RemoveShoppingList = new Command<ShoppingList>(OnShoppingListRemove);
             AddShoppingListCommand = new Command(OnAddShoppingList);
         }
 
@@ -52,7 +54,6 @@ namespace ShoppingListApp.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            //SelectedItem = null;
         }
 
         public async void OnAddShoppingList()
@@ -62,12 +63,20 @@ namespace ShoppingListApp.ViewModels
 
         private async void OnShoppingListSelected(ShoppingList shoppingList)
         {
-            if (shoppingList == null)
-                return;
-
-            // Das ist eine URL. ? ist der Beginn der Parameter
-            await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}");
+            if (shoppingList != null)
+            {
+                // Das ist eine URL. ? ist der Beginn der Parameter
+                await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}");
+            }
         }
 
+        private async void OnShoppingListRemove(ShoppingList shoppingList)
+        {
+            if (shoppingList != null)
+            {
+                _ = await ShoppingListDataStore.RemoveShoppingListAsync(shoppingList.Id);
+                IsBusy = true;
+            }
+        }
     }
 }

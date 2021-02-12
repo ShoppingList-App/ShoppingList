@@ -18,6 +18,7 @@ namespace ShoppingListApp.Services
         Task<string> AddShoppingItemAsync(string shoppingListId, ShoppingItem shoppingItem);
         Task<string> AddStoreItemAsync(StoreItem storeItem);
 
+        Task<ShoppingList> RemoveShoppingListAsync(string shoppingListId);
         Task<ShoppingItem> RemoveShoppingListItemAsync(string shoppingListId, string shoppingItemId);
     }
 }

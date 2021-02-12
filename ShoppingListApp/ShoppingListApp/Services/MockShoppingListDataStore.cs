@@ -97,11 +97,19 @@ namespace ShoppingListApp.Services
         }
 
         /* REMOVE */
+        public async Task<ShoppingList> RemoveShoppingListAsync(string shoppingListId)
+        {
+            ShoppingList shoppingList = GetShoppingListById(shoppingListId);
+            _ = shoppingLists.Remove(shoppingList);
+
+            return await Task.FromResult(shoppingList);
+        }
+
         public async Task<ShoppingItem> RemoveShoppingListItemAsync(string shoppingListId, string shoppingItemId)
         {
             ShoppingList shoppingList = GetShoppingListById(shoppingListId);
             ShoppingItem shoppingItem = shoppingList.Items.FirstOrDefault(s => s.Id == shoppingItemId);
-            shoppingList.Items.Remove(shoppingItem);
+            _ = shoppingList.Items.Remove(shoppingItem);
 
             return await Task.FromResult(shoppingItem);
         }

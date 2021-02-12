@@ -1,6 +1,5 @@
 ﻿using ShoppingListApp.Models;
 using System;
-using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
@@ -8,7 +7,6 @@ namespace ShoppingListApp.ViewModels
     class NewShoppingListViewModel : BaseShoppingListViewModel
     {
         private String text;
-        private String description;
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
@@ -28,16 +26,10 @@ namespace ShoppingListApp.ViewModels
             get => text;
             set => SetProperty(ref text, value);
         }
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(Text)
-                && !String.IsNullOrWhiteSpace(Description);
+            return !String.IsNullOrWhiteSpace(Text);
         }
 
         private async void OnCancel()
@@ -58,6 +50,5 @@ namespace ShoppingListApp.ViewModels
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
-
     }
 }
