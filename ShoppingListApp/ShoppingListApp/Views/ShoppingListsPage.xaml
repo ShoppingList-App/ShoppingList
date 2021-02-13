@@ -32,7 +32,7 @@
                             <SwipeItems>
                                 <SwipeItem Text="Shop"
                                            BackgroundColor="Green"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingListsViewModel}}, Path=ShoppingListTapped}"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingListsViewModel}}, Path=StartShoppingTapped}"
                                            CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.RightItems>

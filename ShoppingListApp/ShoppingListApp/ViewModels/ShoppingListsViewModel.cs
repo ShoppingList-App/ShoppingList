@@ -15,6 +15,7 @@ namespace ShoppingListApp.ViewModels
         public Command LoadShoppingListsCommand { get; }
         public Command AddShoppingListCommand { get; }
         public Command<ShoppingList> ShoppingListTapped { get; }
+        public Command<ShoppingList> StartShoppingTapped { get; }
         public Command<ShoppingList> RemoveShoppingList { get; }
 
         public ShoppingListsViewModel()
@@ -24,6 +25,7 @@ namespace ShoppingListApp.ViewModels
 
             LoadShoppingListsCommand = new Command(async () => await ExecuteLoadShoppingListsCommand());
             ShoppingListTapped = new Command<ShoppingList>(OnShoppingListSelected);
+            StartShoppingTapped = new Command<ShoppingList>(OnStartShoppingTappedSelected);
             RemoveShoppingList = new Command<ShoppingList>(OnShoppingListRemove);
             AddShoppingListCommand = new Command(OnAddShoppingList);
         }
@@ -66,7 +68,18 @@ namespace ShoppingListApp.ViewModels
             if (shoppingList != null)
             {
                 // Das ist eine URL. ? ist der Beginn der Parameter
-                await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}");
+                Debug.WriteLine($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Modify}");
+                await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Modify}");
+            }
+        }
+
+        private async void OnStartShoppingTappedSelected(ShoppingList shoppingList)
+        {
+            if (shoppingList != null)
+            {
+                // Das ist eine URL. ? ist der Beginn der Parameter
+                Debug.WriteLine($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Shop}");
+                await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Shop}");
             }
         }
 

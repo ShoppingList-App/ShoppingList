@@ -14,10 +14,14 @@ namespace ShoppingListApp.Services
         public MockShoppingListDataStore()
         {
             storeItems = new List<StoreItem>() {
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 1", Unit = "Kiste" },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 2", Unit = "Bund" },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 3", Unit = "Stiege" },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 4", Unit = "VPE" }
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 1", Unit = "Kiste", SortKey = 4 },
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 2", Unit = "Bund", SortKey = 2 },
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 3", Unit = "Stiege", SortKey = 3 },
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 4", Unit = "VPE", SortKey = 1 },
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 1", Unit = "Kiste"},
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 2", Unit = "Bund"},
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 3", Unit = "Stiege"},
+                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 4", Unit = "VPE"}
             };
 
             shoppingLists = new List<ShoppingList>()
@@ -29,10 +33,10 @@ namespace ShoppingListApp.Services
                    new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[3].Id, Amount = 4, Unit = "Foo" },
                 } },
                 new ShoppingList { Id = Guid.NewGuid().ToString(), Text = "Second List", Items = new List<ShoppingItem>() {
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[0].Id , Amount = 1, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[1].Id, Amount = 2, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[2].Id, Amount = 3, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[3].Id, Amount = 4, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[4].Id, Amount = 1, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[5].Id, Amount = 2, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[6].Id, Amount = 3, Unit = "Foo" },
+                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[7].Id, Amount = 4, Unit = "Foo" },
                 } }
             };
         }
@@ -52,6 +56,16 @@ namespace ShoppingListApp.Services
         {
             ShoppingList shoppingList = GetShoppingListById(shoppingListId);
             return await Task.FromResult(shoppingList.Items);
+        }
+
+        public async Task<IEnumerable<ShoppingItem>> GetShoppingItemsOrderBySortKeyAsync(string shoppingListId)
+        {
+            ShoppingList shoppingList = GetShoppingListById(shoppingListId);
+            IEnumerable<ShoppingItem> foo = from shoppingItem in shoppingList.Items
+                                            join storeItem in storeItems on shoppingItem.StoreItemId equals storeItem.Id
+                                            orderby storeItem.SortKey
+                                            select shoppingItem;
+            return await Task.FromResult(foo);
         }
 
         public async Task<StoreItem> GetStoreItemAsync(string itemId)
@@ -114,6 +128,13 @@ namespace ShoppingListApp.Services
             return await Task.FromResult(shoppingItem);
         }
 
+        /* UPDATE */
+        public async Task<bool> UpdateStoreItemSortKeyAsync(string storeItemId, uint sortKey)
+        {
+            StoreItem storeItem = GetStoreItemById(storeItemId);
+            storeItem.SortKey = sortKey;
+            return await Task.FromResult(true);
+        }
 
 
 

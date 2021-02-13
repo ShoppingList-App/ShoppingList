@@ -1,6 +1,7 @@
 ﻿using ShoppingListApp.Models;
 using ShoppingListApp.Views;
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -8,13 +9,21 @@ using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
 {
-    [QueryProperty("ShoppingListId", "ShoppingListId")]
+    [QueryProperty("SelectedMode", "SelectedMode"), QueryProperty("ShoppingListId", "ShoppingListId")]
     class ShoppingListViewModel : BaseShoppingListViewModel
     {
+        public enum Mode
+        {
+            Modify,
+            Shop
+        }
+
         public ObservableCollection<ShoppingItem> ShoppingItems { get; }
 
         private string shoppingListId;
+        private Mode selectedMode;
         private string text;
+        private uint lastRemovedSortKey = 0;
         public string Id { get; set; }
 
         public Command LoadShoppingItemsCommand { get; }
@@ -43,7 +52,14 @@ namespace ShoppingListApp.ViewModels
             try
             {
                 ShoppingItems.Clear();
-                System.Collections.Generic.IEnumerable<ShoppingItem> items = await ShoppingListDataStore.GetShoppingItemsAsync(shoppingListId);
+                System.Collections.Generic.IEnumerable<ShoppingItem> items;
+                if (selectedMode == Mode.Modify)
+                {
+                    items = await ShoppingListDataStore.GetShoppingItemsAsync(shoppingListId);
+                } else
+                {
+                    items = await ShoppingListDataStore.GetShoppingItemsOrderBySortKeyAsync(shoppingListId);
+                }
                 foreach (ShoppingItem item in items)
                 {
                     ShoppingItems.Add(item);
@@ -78,6 +94,12 @@ namespace ShoppingListApp.ViewModels
             }
         }
 
+        public string SelectedMode
+        {
+            get => selectedMode.ToString();
+            set => selectedMode = (Mode)Enum.Parse(typeof(Mode), value);
+        }
+
         public async void LoadShoppingList(string shoppingListId)
         {
             try
@@ -104,6 +126,20 @@ namespace ShoppingListApp.ViewModels
             {
                 ShoppingItem shoppingItem = await ShoppingListDataStore.RemoveShoppingListItemAsync(ShoppingListId, @sii);
                 _ = ShoppingItems.Remove(shoppingItem);
+                StoreItem storeItem = await ShoppingListDataStore.GetStoreItemAsync(shoppingItem.StoreItemId);
+
+                if (selectedMode == Mode.Shop)
+                {
+                    // store item was never shopped
+                    // or store item has wrong position in list
+                    if (storeItem.SortKey == 0 || storeItem.SortKey <= lastRemovedSortKey)
+                    {
+                        storeItem.SortKey = lastRemovedSortKey + 1;
+                        _ = await ShoppingListDataStore.UpdateStoreItemSortKeyAsync(storeItem.Id, storeItem.SortKey);
+                    }
+
+                    lastRemovedSortKey = storeItem.SortKey;
+                }
             }
         }
     }

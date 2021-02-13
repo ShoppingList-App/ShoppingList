@@ -10,6 +10,7 @@ namespace ShoppingListApp.Services
         Task<IEnumerable<ShoppingList>> GetShoppingListsAsync();
         Task<ShoppingList> GetShoppingListAsync(string shoppingListId);
         Task<IEnumerable<ShoppingItem>> GetShoppingItemsAsync(string shoppingListId);
+        Task<IEnumerable<ShoppingItem>> GetShoppingItemsOrderBySortKeyAsync(string shoppingListId);
         Task<StoreItem> GetStoreItemAsync(string itemId);
         Task<IEnumerable<StoreItem>> GetStoreItemsAsync();
 
@@ -24,5 +25,8 @@ namespace ShoppingListApp.Services
         /* REMOVE */
         Task<ShoppingList> RemoveShoppingListAsync(string shoppingListId);
         Task<ShoppingItem> RemoveShoppingListItemAsync(string shoppingListId, string shoppingItemId);
+
+        /* UPDATE */
+        Task<bool> UpdateStoreItemSortKeyAsync(string storeItemId, uint sortKey);
     }
 }
