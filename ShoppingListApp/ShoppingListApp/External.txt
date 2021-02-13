@@ -1,0 +1,2 @@
+﻿- AutoSuggestBox (nuget dotMorten.Xamarin.Forms.AutoSuggestBox) by Morten Nielsen / dotMorten
+	https://github.com/dotMorten/XamarinFormsControls/tree/main/AutoSuggestBox

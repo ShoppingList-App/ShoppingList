@@ -1,8 +1,10 @@
 ﻿using ShoppingListApp.Models;
 using ShoppingListApp.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
@@ -116,6 +118,18 @@ namespace ShoppingListApp.ViewModels
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}");
+        }
+
+        public async Task<List<StoreItem>> SearchStoreItemsAsync(string searchText)
+        {
+            IEnumerable<StoreItem> items = await ShoppingListDataStore.SearchStoreItemsAsync(searchText);
+            List<StoreItem> ret = new List<StoreItem>();
+            foreach (StoreItem item in items)
+            {
+                ret.Add(item);
+            }
+
+            return ret;
         }
     }
 }

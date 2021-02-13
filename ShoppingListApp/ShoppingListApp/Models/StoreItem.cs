@@ -10,5 +10,10 @@ namespace ShoppingListApp.Models
         public string Text { get; set; }
         public string Unit { get; set; }
         public uint SortKey { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Text} ({Unit})";
+        }
     }
 }

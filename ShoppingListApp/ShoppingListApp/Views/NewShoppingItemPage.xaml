@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingListApp.Views.NewShoppingItemPage"
              xmlns:model="clr-namespace:ShoppingListApp.Models"
+             xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
              Title="{Binding Title}">
 
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
-            <Label Text="Re-Buy"/>
-            <Picker ItemsSource="{Binding StoreItems}" ItemDisplayBinding="{Binding Text}" SelectedItem="{Binding SelectedStoreItem}"/>
-            <Label Text="Text"/>
-            <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Amount"/>
+            <forms:AutoSuggestBox PlaceholderText="Search"
+                                  WidthRequest="200"
+                                  TextChanged="OnRebuyTextChanged"
+                                  SuggestionChosen="OnRebuySuggestionChosen"
+                                  Text="{Binding Text, Mode=TwoWay}"/>
             <Grid Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
