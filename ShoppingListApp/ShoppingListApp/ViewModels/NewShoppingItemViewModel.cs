@@ -1,6 +1,4 @@
 ﻿using ShoppingListApp.Models;
-using ShoppingListApp.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -117,7 +115,7 @@ namespace ShoppingListApp.ViewModels
             _ = await ShoppingListDataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
 
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}");
+            await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}&{nameof(ShoppingListViewModel.SelectedMode)}=Modify");
         }
 
         public async Task<List<StoreItem>> SearchStoreItemsAsync(string searchText)
