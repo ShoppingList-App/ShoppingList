@@ -27,5 +27,8 @@ namespace ShoppingListApp.Services
 
         /* UPDATE */
         Task UpdateStoreItemAsync(StoreItem storeItem);
+
+        /* DANGER ZONE */
+        Task ResetDatabaseAsync();
     }
 }

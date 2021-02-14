@@ -12,9 +12,9 @@ namespace ShoppingListApp
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(NewShoppingListPage), typeof(NewShoppingListPage));
-            Routing.RegisterRoute(nameof(ShoppingListPage), typeof(ShoppingListPage));
-            Routing.RegisterRoute(nameof(NewShoppingItemPage), typeof(NewShoppingItemPage));
+            Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(NewShoppingListPage)}", typeof(NewShoppingListPage));
+            Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(ShoppingListPage)}", typeof(ShoppingListPage));
+            Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(ShoppingListPage)}/{nameof(NewShoppingItemPage)}", typeof(NewShoppingItemPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

@@ -124,6 +124,17 @@ namespace ShoppingListApp.Services
             return Task.CompletedTask;
         }
 
+        /* DANGER ZONE */
+        public Task ResetDatabaseAsync()
+        {
+            shoppingLists.Clear();
+            storeItems.Clear();
+            return Task.CompletedTask;
+        }
+
+
+
+
         private ShoppingList GetShoppingListById(int shoppingListId)
         {
             return shoppingLists.FirstOrDefault(s => s.Id == shoppingListId);

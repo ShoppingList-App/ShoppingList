@@ -11,7 +11,7 @@ namespace ShoppingListApp.Models
         public int ShoppingListId { get; set; }
         [ForeignKey(typeof(StoreItem))]
         public int StoreItemId { get; set; }
-        [ManyToOne(CascadeOperations = CascadeOperation.All)]
+        [ManyToOne(CascadeOperations = CascadeOperation.CascadeRead)]
         public StoreItem StoreItem { get; set; }
         public uint Amount { get; set; }
         public string Unit { get; set; }

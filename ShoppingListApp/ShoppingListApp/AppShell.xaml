@@ -80,7 +80,9 @@
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
     <FlyoutItem Title="Shopping Lists" Icon="icon_feed.png">
-        <ShellContent Route="ShoppingListsPage" ContentTemplate="{DataTemplate local:ShoppingListsPage}" />
+        <ShellContent Route="ShoppingListsPage" ContentTemplate="{DataTemplate local:ShoppingListsPage}">
+            <ShellContent Route="NewShoppingListPage"/>
+        </ShellContent>
     </FlyoutItem>
     <FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />

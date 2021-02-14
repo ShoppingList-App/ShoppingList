@@ -8,7 +8,7 @@
 
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
-            <forms:AutoSuggestBox PlaceholderText="Search"
+            <forms:AutoSuggestBox PlaceholderText="New Article"
                                   WidthRequest="200"
                                   TextChanged="OnRebuyTextChanged"
                                   SuggestionChosen="OnRebuySuggestionChosen"

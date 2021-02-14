@@ -1,7 +1,6 @@
 ﻿using ShoppingListApp.Models;
 using ShoppingListApp.Views;
 using System;
-using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -14,6 +13,7 @@ namespace ShoppingListApp.ViewModels
     {
         public enum Mode
         {
+            None,
             Modify,
             Shop
         }
@@ -104,7 +104,7 @@ namespace ShoppingListApp.ViewModels
             ShoppingList item = await ShoppingListDataStore.GetShoppingListAsync(shoppingListId);
             Id = item.Id;
             Text = item.Text;
-            Title = item.Text;
+            Title = $"{item.Text} ({selectedMode})";
         }
 
         public async void OnAddShoppingItem()

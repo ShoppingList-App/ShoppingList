@@ -86,7 +86,7 @@ namespace ShoppingListApp.ViewModels
         private async void OnCancel()
         {
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}");
+            await Shell.Current.GoToAsync("..");
         }
 
         private async void OnSave()
@@ -115,18 +115,14 @@ namespace ShoppingListApp.ViewModels
             await ShoppingListDataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
 
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}&{nameof(ShoppingListViewModel.SelectedMode)}=Modify");
+            await Shell.Current.GoToAsync("..");
         }
 
         public async Task<List<StoreItem>> SearchStoreItemsAsync(string searchText)
         {
             IEnumerable<StoreItem> items = await ShoppingListDataStore.SearchStoreItemsAsync(searchText);
             List<StoreItem> ret = new List<StoreItem>();
-            foreach (StoreItem item in items)
-            {
-                ret.Add(item);
-            }
-
+            ret.AddRange(items);
             return ret;
         }
     }

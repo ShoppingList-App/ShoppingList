@@ -4,22 +4,27 @@ using SQLiteNetExtensionsAsync.Extensions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ShoppingListApp.Services
 {
     internal class SQLiteShoppingListDataStore : IShoppingListDataStore
     {
         private readonly string databasePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Path.DirectorySeparatorChar + "shopping.db";
-        private readonly SQLiteAsyncConnection db;
+        private SQLiteAsyncConnection db;
 
         public SQLiteShoppingListDataStore()
         {
 #if DEBUG
             File.Delete(databasePath);
 #endif
+            initDatabase();
+        }
+
+        private void initDatabase()
+        {
             db = new SQLiteAsyncConnection(databasePath);
             db.CreateTableAsync<StoreItem>().Wait();
             db.CreateTableAsync<ShoppingItem>().Wait();
@@ -29,7 +34,7 @@ namespace ShoppingListApp.Services
         /* ADD */
         public async Task AddShoppingItemAsync(int shoppingListId, ShoppingItem shoppingItem)
         {
-            await db.InsertWithChildrenAsync(shoppingItem, true);
+            await db.InsertWithChildrenAsync(shoppingItem);
             ShoppingList sl = await db.GetWithChildrenAsync<ShoppingList>(shoppingListId);
             sl.Items.Add(shoppingItem);
             await db.UpdateWithChildrenAsync(sl);
@@ -65,7 +70,7 @@ namespace ShoppingListApp.Services
 
         public async Task<IEnumerable<ShoppingList>> GetShoppingListsAsync()
         {
-            return await db.Table<ShoppingList>().ToListAsync();
+            return await db.GetAllWithChildrenAsync<ShoppingList>();
         }
 
         public async Task<IEnumerable<StoreItem>> GetStoreItemsAsync()
@@ -76,7 +81,7 @@ namespace ShoppingListApp.Services
         /* REMOVE */
         public async Task RemoveShoppingListAsync(ShoppingList shoppingList)
         {
-            _ = await db.DeleteAsync(shoppingList);
+            await db.DeleteAsync(shoppingList, true);
         }
 
         public async Task RemoveShoppingListItemAsync(int shoppingListId, ShoppingItem shoppingItem)
@@ -95,6 +100,15 @@ namespace ShoppingListApp.Services
         public async Task UpdateStoreItemAsync(StoreItem storeItem)
         {
             _ = await db.UpdateAsync(storeItem);
+        }
+
+        /* DANGER ZONE */
+        public async Task ResetDatabaseAsync()
+        {
+            await db.CloseAsync();
+            db = null;
+            File.Delete(databasePath);
+            initDatabase();
         }
     }
 }
