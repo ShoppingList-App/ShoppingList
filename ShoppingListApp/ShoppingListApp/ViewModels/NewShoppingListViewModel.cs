@@ -45,7 +45,7 @@ namespace ShoppingListApp.ViewModels
                 Text = Text
             };
 
-            _ = await ShoppingListDataStore.AddShoppingListAsync(newShoppingList);
+            await ShoppingListDataStore.AddShoppingListAsync(newShoppingList);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

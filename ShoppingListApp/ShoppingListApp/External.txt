@@ -1,2 +1,9 @@
 ﻿- AutoSuggestBox (nuget dotMorten.Xamarin.Forms.AutoSuggestBox) by Morten Nielsen / dotMorten
 	https://github.com/dotMorten/XamarinFormsControls/tree/main/AutoSuggestBox
+
+- SQLite-net (nuget sqlite-net-pcl) by Frank A. Krueger / praeclarum
+	https://github.com/praeclarum/sqlite-net
+
+- SQLiteNetExtensions (nuget SQLiteNetExtensions; SQLiteNetExtensions.Async) by TwinCoders
+	https://bitbucket.org/twincoders/sqlite-net-extensions/src/master/
+	

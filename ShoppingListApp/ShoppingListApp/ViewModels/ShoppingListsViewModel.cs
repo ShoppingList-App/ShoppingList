@@ -87,7 +87,7 @@ namespace ShoppingListApp.ViewModels
         {
             if (shoppingList != null)
             {
-                _ = await ShoppingListDataStore.RemoveShoppingListAsync(shoppingList.Id);
+                await ShoppingListDataStore.RemoveShoppingListAsync(shoppingList);
                 IsBusy = true;
             }
         }

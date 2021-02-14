@@ -38,7 +38,7 @@ namespace ShoppingListApp.ViewModels
         private void LoadStoreItems()
         {
             StoreItems.Clear();
-            System.Collections.Generic.IEnumerable<StoreItem> items = ShoppingListDataStore.GetStoreItemsAsync().Result;
+            IEnumerable<StoreItem> items = ShoppingListDataStore.GetStoreItemsAsync().Result;
             foreach (StoreItem item in items)
             {
                 StoreItems.Add(item);
@@ -74,7 +74,7 @@ namespace ShoppingListApp.ViewModels
             set => SetProperty(ref unit, value);
         }
 
-        public string ShoppingListId { get; set; }
+        public int ShoppingListId { get; set; }
 
         private bool ValidateSave()
         {
@@ -91,28 +91,28 @@ namespace ShoppingListApp.ViewModels
 
         private async void OnSave()
         {
-            string storeItemId;
-            if (selectedStoreItem != null && selectedStoreItem.Text == Text)
+            StoreItem storeItem;
+            if (selectedStoreItem == null || selectedStoreItem.Text != Text)
             {
-                storeItemId = selectedStoreItem.Id;
-            }
-            else
-            {
-                StoreItem storeItem = new StoreItem()
+                storeItem = new StoreItem()
                 {
                     Text = Text,
                     Unit = Unit
                 };
-                storeItemId = await ShoppingListDataStore.AddStoreItemAsync(storeItem);
+                await ShoppingListDataStore.AddStoreItemAsync(storeItem);
+            }
+            else
+            {
+                storeItem = selectedStoreItem;
             }
 
             ShoppingItem shoppingItem = new ShoppingItem()
             {
-                StoreItemId = storeItemId,
+                StoreItem = storeItem,
                 Amount = Amount,
                 Unit = Unit
             };
-            _ = await ShoppingListDataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
+            await ShoppingListDataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync($"..?{nameof(ShoppingListViewModel.ShoppingListId)}={ShoppingListId}&{nameof(ShoppingListViewModel.SelectedMode)}=Modify");

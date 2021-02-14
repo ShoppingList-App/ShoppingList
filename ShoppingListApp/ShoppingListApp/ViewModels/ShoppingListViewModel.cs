@@ -20,11 +20,11 @@ namespace ShoppingListApp.ViewModels
 
         public ObservableCollection<ShoppingItem> ShoppingItems { get; }
 
-        private string shoppingListId;
+        private int shoppingListId;
         private Mode selectedMode;
         private string text;
         private uint lastRemovedSortKey = 0;
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public Command LoadShoppingItemsCommand { get; }
         public Command AddShoppingItemCommand { get; }
@@ -42,7 +42,6 @@ namespace ShoppingListApp.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            //SelectedItem = null;
         }
 
         private async Task ExecuteLoadShoppingItemsCommand()
@@ -81,7 +80,7 @@ namespace ShoppingListApp.ViewModels
             set => SetProperty(ref text, value);
         }
 
-        public string ShoppingListId
+        public int ShoppingListId
         {
             get
             {
@@ -100,19 +99,12 @@ namespace ShoppingListApp.ViewModels
             set => selectedMode = (Mode)Enum.Parse(typeof(Mode), value);
         }
 
-        public async void LoadShoppingList(string shoppingListId)
+        public async void LoadShoppingList(int shoppingListId)
         {
-            try
-            {
-                ShoppingList item = await ShoppingListDataStore.GetShoppingListAsync(shoppingListId);
-                Id = item.Id;
-                Text = item.Text;
-                Title = item.Text;
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Failed to Load Item");
-            }
+            ShoppingList item = await ShoppingListDataStore.GetShoppingListAsync(shoppingListId);
+            Id = item.Id;
+            Text = item.Text;
+            Title = item.Text;
         }
 
         public async void OnAddShoppingItem()
@@ -120,25 +112,25 @@ namespace ShoppingListApp.ViewModels
             await Shell.Current.GoToAsync($"{nameof(NewShoppingItemPage)}?{nameof(NewShoppingItemViewModel.ShoppingListId)}={ShoppingListId}");
         }
 
-        public async void OnRemoveShoppingItem(object shoppingItemId)
+        public async void OnRemoveShoppingItem(object shoppingItem)
         {
-            if (shoppingItemId is string @sii)
+            if (shoppingItem is ShoppingItem @si)
             {
-                ShoppingItem shoppingItem = await ShoppingListDataStore.RemoveShoppingListItemAsync(ShoppingListId, @sii);
-                _ = ShoppingItems.Remove(shoppingItem);
-                StoreItem storeItem = await ShoppingListDataStore.GetStoreItemAsync(shoppingItem.StoreItemId);
+                await ShoppingListDataStore.RemoveShoppingListItemAsync(ShoppingListId, @si);
+                _ = ShoppingItems.Remove(si);
 
                 if (selectedMode == Mode.Shop)
                 {
                     // store item was never shopped
                     // or store item has wrong position in list
-                    if (storeItem.SortKey == 0 || storeItem.SortKey <= lastRemovedSortKey)
+                    if (si.StoreItem.SortKey == 0 || si.StoreItem.SortKey <= lastRemovedSortKey)
                     {
-                        storeItem.SortKey = lastRemovedSortKey + 1;
-                        _ = await ShoppingListDataStore.UpdateStoreItemSortKeyAsync(storeItem.Id, storeItem.SortKey);
+                        si.StoreItem.SortKey = lastRemovedSortKey + 1;
+                        // don't care about finishing of sortkey update
+                        _ = ShoppingListDataStore.UpdateStoreItemAsync(si.StoreItem);
                     }
 
-                    lastRemovedSortKey = storeItem.SortKey;
+                    lastRemovedSortKey = si.StoreItem.SortKey;
                 }
             }
         }

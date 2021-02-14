@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingListApp.ViewModels"
-             xmlns:converter="clr-namespace:ShoppingListApp.ViewModels.Converter"
              xmlns:model="clr-namespace:ShoppingListApp.Models"  
              x:Class="ShoppingListApp.Views.ShoppingListPage"
              Title="{Binding Title}">
@@ -10,12 +9,6 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddShoppingItemCommand}" />
     </ContentPage.ToolbarItems>
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:StoreItemId2TextConverter x:Key="storeItemId2Text" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <RefreshView x:DataType="local:ShoppingListViewModel" Command="{Binding LoadShoppingItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ShoppingListView"
@@ -31,7 +24,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Text="{Binding StoreItemId, Converter={StaticResource storeItemId2Text}}"
+                        <Label Text="{Binding StoreItem.Text}"
                                Padding="10,0,0,0"
                                BackgroundColor="{StaticResource Primary}"
                                TextColor="{StaticResource ButtonTextColor}"
@@ -49,7 +42,7 @@
                             <TapGestureRecognizer
                                 NumberOfTapsRequired="2"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingListViewModel}}, Path=RemoveShoppingItemCommand}"
-                                CommandParameter="{Binding Id}"/>
+                                CommandParameter="{Binding .}"/>
                         </Grid.GestureRecognizers>
                     </Grid>
                 </DataTemplate>

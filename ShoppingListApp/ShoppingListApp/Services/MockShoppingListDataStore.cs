@@ -1,42 +1,42 @@
 ﻿using ShoppingListApp.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShoppingListApp.Services
 {
-    class MockShoppingListDataStore : IShoppingListDataStore
+    internal class MockShoppingListDataStore : IShoppingListDataStore
     {
         private readonly List<StoreItem> storeItems;
         private readonly List<ShoppingList> shoppingLists;
+        private int i = 0;
 
         public MockShoppingListDataStore()
         {
             storeItems = new List<StoreItem>() {
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 1", Unit = "Kiste", SortKey = 4 },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 2", Unit = "Bund", SortKey = 2 },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 3", Unit = "Stiege", SortKey = 3 },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "First Item 4", Unit = "VPE", SortKey = 1 },
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 1", Unit = "Kiste"},
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 2", Unit = "Bund"},
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 3", Unit = "Stiege"},
-                new StoreItem { Id = Guid.NewGuid().ToString(), Text = "Second Item 4", Unit = "VPE"}
+                new StoreItem { Id = i++, Text = "First Item 1", Unit = "Kiste", SortKey = 4 },
+                new StoreItem { Id = i++, Text = "First Item 2", Unit = "Bund", SortKey = 2 },
+                new StoreItem { Id = i++, Text = "First Item 3", Unit = "Stiege", SortKey = 3 },
+                new StoreItem { Id = i++, Text = "First Item 4", Unit = "VPE", SortKey = 1 },
+                new StoreItem { Id = i++, Text = "Second Item 1", Unit = "Kiste"},
+                new StoreItem { Id = i++, Text = "Second Item 2", Unit = "Bund"},
+                new StoreItem { Id = i++, Text = "Second Item 3", Unit = "Stiege"},
+                new StoreItem { Id = i++, Text = "Second Item 4", Unit = "VPE"}
             };
 
             shoppingLists = new List<ShoppingList>()
             {
-                new ShoppingList { Id = Guid.NewGuid().ToString(), Text = "First List", Items = new List<ShoppingItem>() {
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[0].Id , Amount = 1, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[1].Id, Amount = 2, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[2].Id, Amount = 3, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[3].Id, Amount = 4, Unit = "Foo" },
+                new ShoppingList { Id = i++, Text = "First List", Items = new List<ShoppingItem>() {
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[0], Amount = 1, Unit = "Foo" },
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[1], Amount = 2, Unit = "Foo" },
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[2], Amount = 3, Unit = "Foo" },
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[3], Amount = 4, Unit = "Foo" },
                 } },
-                new ShoppingList { Id = Guid.NewGuid().ToString(), Text = "Second List", Items = new List<ShoppingItem>() {
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[4].Id, Amount = 1, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[5].Id, Amount = 2, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[6].Id, Amount = 3, Unit = "Foo" },
-                   new ShoppingItem { Id = Guid.NewGuid().ToString(), StoreItemId = storeItems[7].Id, Amount = 4, Unit = "Foo" },
+                new ShoppingList { Id = i++, Text = "Second List", Items = new List<ShoppingItem>() {
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[4], Amount = 1, Unit = "Foo" },
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[5], Amount = 2, Unit = "Foo" },
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[6], Amount = 3, Unit = "Foo" },
+                   new ShoppingItem { Id = i++, StoreItem = storeItems[7], Amount = 4, Unit = "Foo" },
                 } }
             };
         }
@@ -47,30 +47,25 @@ namespace ShoppingListApp.Services
             return await Task.FromResult(shoppingLists);
         }
 
-        public async Task<ShoppingList> GetShoppingListAsync(string shoppingListId)
+        public async Task<ShoppingList> GetShoppingListAsync(int shoppingListId)
         {
             return await Task.FromResult(GetShoppingListById(shoppingListId));
         }
 
-        public async Task<IEnumerable<ShoppingItem>> GetShoppingItemsAsync(string shoppingListId)
+        public async Task<IEnumerable<ShoppingItem>> GetShoppingItemsAsync(int shoppingListId)
         {
             ShoppingList shoppingList = GetShoppingListById(shoppingListId);
             return await Task.FromResult(shoppingList.Items);
         }
 
-        public async Task<IEnumerable<ShoppingItem>> GetShoppingItemsOrderBySortKeyAsync(string shoppingListId)
+        public async Task<IEnumerable<ShoppingItem>> GetShoppingItemsOrderBySortKeyAsync(int shoppingListId)
         {
             ShoppingList shoppingList = GetShoppingListById(shoppingListId);
             IEnumerable<ShoppingItem> foo = from shoppingItem in shoppingList.Items
-                                            join storeItem in storeItems on shoppingItem.StoreItemId equals storeItem.Id
+                                            join storeItem in storeItems on shoppingItem.StoreItem equals storeItem
                                             orderby storeItem.SortKey
                                             select shoppingItem;
             return await Task.FromResult(foo);
-        }
-
-        public async Task<StoreItem> GetStoreItemAsync(string itemId)
-        {
-            return await Task.FromResult(GetStoreItemById(itemId));
         }
 
         public async Task<IEnumerable<StoreItem>> GetStoreItemsAsync()
@@ -86,67 +81,52 @@ namespace ShoppingListApp.Services
         }
 
         /* ADD */
-        public async Task<string> AddShoppingListAsync(ShoppingList shoppingList)
+        public Task AddShoppingListAsync(ShoppingList shoppingList)
         {
-            shoppingList.Id = Guid.NewGuid().ToString();
+            shoppingList.Id = i++;
             shoppingLists.Add(shoppingList);
-            return await Task.FromResult(shoppingList.Id);
+            return Task.CompletedTask;
         }
 
-        public async Task<string> AddShoppingItemAsync(string shoppingListId, ShoppingItem shoppingItem)
+        public Task AddShoppingItemAsync(int shoppingListId, ShoppingItem shoppingItem)
         {
-            shoppingItem.Id = Guid.NewGuid().ToString();
-
+            shoppingItem.Id = i++;
             ShoppingList shoppingList = GetShoppingListById(shoppingListId);
             shoppingList.Items.Add(shoppingItem);
-            return await Task.FromResult(shoppingItem.Id);
+            return Task.CompletedTask;
         }
 
-        public async Task<string> AddStoreItemAsync(StoreItem storeItem)
+        public Task AddStoreItemAsync(StoreItem storeItem)
         {
-            storeItem.Id = Guid.NewGuid().ToString();
-
+            storeItem.Id = i++;
             storeItems.Add(storeItem);
-            return await Task.FromResult(storeItem.Id);
+            return Task.CompletedTask;
         }
 
         /* REMOVE */
-        public async Task<ShoppingList> RemoveShoppingListAsync(string shoppingListId)
+        public Task RemoveShoppingListAsync(ShoppingList shoppingList)
         {
-            ShoppingList shoppingList = GetShoppingListById(shoppingListId);
             _ = shoppingLists.Remove(shoppingList);
-
-            return await Task.FromResult(shoppingList);
+            return Task.CompletedTask;
         }
 
-        public async Task<ShoppingItem> RemoveShoppingListItemAsync(string shoppingListId, string shoppingItemId)
+        public Task RemoveShoppingListItemAsync(int shoppingListId, ShoppingItem shoppingItem)
         {
             ShoppingList shoppingList = GetShoppingListById(shoppingListId);
-            ShoppingItem shoppingItem = shoppingList.Items.FirstOrDefault(s => s.Id == shoppingItemId);
             _ = shoppingList.Items.Remove(shoppingItem);
-
-            return await Task.FromResult(shoppingItem);
+            return Task.CompletedTask;
         }
 
         /* UPDATE */
-        public async Task<bool> UpdateStoreItemSortKeyAsync(string storeItemId, uint sortKey)
+        public Task UpdateStoreItemAsync(StoreItem storeItem)
         {
-            StoreItem storeItem = GetStoreItemById(storeItemId);
-            storeItem.SortKey = sortKey;
-            return await Task.FromResult(true);
+            // nothing do, storeItem is reference, it's already updated
+            return Task.CompletedTask;
         }
 
-
-
-
-
-        private ShoppingList GetShoppingListById(string shoppingListId)
+        private ShoppingList GetShoppingListById(int shoppingListId)
         {
             return shoppingLists.FirstOrDefault(s => s.Id == shoppingListId);
-        }
-        private StoreItem GetStoreItemById(string storeItemId)
-        {
-            return storeItems.FirstOrDefault(s => s.Id == storeItemId);
         }
     }
 }

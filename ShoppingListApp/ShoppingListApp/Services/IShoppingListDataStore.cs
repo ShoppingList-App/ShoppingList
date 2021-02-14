@@ -8,25 +8,24 @@ namespace ShoppingListApp.Services
     {
         /* GET */
         Task<IEnumerable<ShoppingList>> GetShoppingListsAsync();
-        Task<ShoppingList> GetShoppingListAsync(string shoppingListId);
-        Task<IEnumerable<ShoppingItem>> GetShoppingItemsAsync(string shoppingListId);
-        Task<IEnumerable<ShoppingItem>> GetShoppingItemsOrderBySortKeyAsync(string shoppingListId);
-        Task<StoreItem> GetStoreItemAsync(string itemId);
+        Task<ShoppingList> GetShoppingListAsync(int shoppingListId);
+        Task<IEnumerable<ShoppingItem>> GetShoppingItemsAsync(int shoppingListId);
+        Task<IEnumerable<ShoppingItem>> GetShoppingItemsOrderBySortKeyAsync(int shoppingListId);
         Task<IEnumerable<StoreItem>> GetStoreItemsAsync();
 
         /* SEARCH */
         Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text);
 
         /* ADD */
-        Task<string> AddShoppingListAsync(ShoppingList shoppingList);
-        Task<string> AddShoppingItemAsync(string shoppingListId, ShoppingItem shoppingItem);
-        Task<string> AddStoreItemAsync(StoreItem storeItem);
+        Task AddShoppingListAsync(ShoppingList shoppingList);
+        Task AddShoppingItemAsync(int shoppingListId, ShoppingItem shoppingItem);
+        Task AddStoreItemAsync(StoreItem storeItem);
 
         /* REMOVE */
-        Task<ShoppingList> RemoveShoppingListAsync(string shoppingListId);
-        Task<ShoppingItem> RemoveShoppingListItemAsync(string shoppingListId, string shoppingItemId);
+        Task RemoveShoppingListAsync(ShoppingList shoppingList);
+        Task RemoveShoppingListItemAsync(int shoppingListId, ShoppingItem shoppingItem);
 
         /* UPDATE */
-        Task<bool> UpdateStoreItemSortKeyAsync(string storeItemId, uint sortKey);
+        Task UpdateStoreItemAsync(StoreItem storeItem);
     }
 }
