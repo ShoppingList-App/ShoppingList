@@ -20,10 +20,10 @@ namespace ShoppingListApp.Services
 #if DEBUG
             File.Delete(databasePath);
 #endif
-            initDatabase();
+            InitDatabase();
         }
 
-        private void initDatabase()
+        private void InitDatabase()
         {
             db = new SQLiteAsyncConnection(databasePath);
             db.CreateTableAsync<StoreItem>().Wait();
@@ -108,7 +108,7 @@ namespace ShoppingListApp.Services
             await db.CloseAsync();
             db = null;
             File.Delete(databasePath);
-            initDatabase();
+            InitDatabase();
         }
     }
 }
