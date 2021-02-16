@@ -1,5 +1,4 @@
 ﻿using ShoppingListApp.ViewModels;
-using System.Collections.ObjectModel;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
