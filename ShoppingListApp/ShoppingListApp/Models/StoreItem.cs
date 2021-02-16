@@ -10,7 +10,7 @@ namespace ShoppingListApp.Models
         public string Text { get; set; }
         public string Unit { get; set; }
         [Indexed]
-        public uint SortKey { get; set; }
+        public uint? SortKey { get; set; }
 
         public override string ToString()
         {

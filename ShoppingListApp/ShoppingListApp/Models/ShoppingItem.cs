@@ -16,6 +16,8 @@ namespace ShoppingListApp.Models
         public uint Amount { get; set; }
         public string Unit { get; set; }
 
+        public bool IsSorted => StoreItem.SortKey.HasValue;
+
         public string AmountDisplay => $"{Amount} {Unit}";
 
         public override bool Equals(object obj)

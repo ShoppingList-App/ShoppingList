@@ -123,14 +123,14 @@ namespace ShoppingListApp.ViewModels
                 {
                     // store item was never shopped
                     // or store item has wrong position in list
-                    if (si.StoreItem.SortKey == 0 || si.StoreItem.SortKey <= lastRemovedSortKey)
+                    if (!si.IsSorted || si.StoreItem.SortKey <= lastRemovedSortKey)
                     {
                         si.StoreItem.SortKey = lastRemovedSortKey + 1;
                         // don't care about finishing of sortkey update
                         _ = ShoppingListDataStore.UpdateStoreItemAsync(si.StoreItem);
                     }
 
-                    lastRemovedSortKey = si.StoreItem.SortKey;
+                    lastRemovedSortKey = si.StoreItem.SortKey.Value;
                 }
             }
         }

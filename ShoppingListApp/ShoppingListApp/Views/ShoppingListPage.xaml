@@ -27,18 +27,30 @@
                         </Grid.ColumnDefinitions>
                         <Label Text="{Binding StoreItem.Text}"
                                Padding="10,0,0,0"
-                               BackgroundColor="{StaticResource Primary}"
-                               TextColor="{StaticResource ButtonTextColor}"
                                Style="{StaticResource LabelButton}" 
                                VerticalTextAlignment="Center"
-                               LineBreakMode="WordWrap"/>
+                               LineBreakMode="WordWrap">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding IsSorted}"
+                                             Value="false">
+                                    <Setter Property="Style" Value="{StaticResource UnsortedItem}"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                         <Label Text="{Binding AmountDisplay}" 
-                               BackgroundColor="{StaticResource Primary}"
-                               TextColor="{StaticResource ButtonTextColor}"
                                LineBreakMode="NoWrap" 
                                Style="{StaticResource LabelButton}"
                                VerticalTextAlignment="Center"
-                               Grid.Column="1"/>
+                               Grid.Column="1">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding IsSorted}"
+                                             Value="false">
+                                    <Setter Property="Style" Value="{StaticResource UnsortedItem}"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                         <Grid.GestureRecognizers IsEnabled="{Binding DeleteButtonIsEnabled}">
                             <TapGestureRecognizer
                                 NumberOfTapsRequired="2"
