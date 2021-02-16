@@ -93,7 +93,7 @@ namespace ShoppingListApp.Services
         public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text)
         {
             string lowerText = text.ToLower();
-            return await db.Table<StoreItem>().Where(si => si.Text.ToLower().Contains(lowerText)).ToListAsync();
+            return await db.Table<StoreItem>().Where(si => si.Text.ToLower().Contains(lowerText)).OrderBy(si => si.Text).ToListAsync();
         }
 
         /* UPDATE */
