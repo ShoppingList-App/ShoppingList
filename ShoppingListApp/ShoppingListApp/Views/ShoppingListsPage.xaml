@@ -13,8 +13,18 @@
     <RefreshView x:DataType="local:ShoppingListsViewModel" Command="{Binding LoadShoppingListsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ShoppingListsView"
                         ItemsSource="{Binding ShoppingLists}"
-                        SelectionMode="None"
-                        EmptyView="Tap &quot;ADD&quot; to create a new shopping list">
+                        SelectionMode="None">
+            <CollectionView.EmptyView>
+                <StackLayout Spacing="15"
+                             VerticalOptions="CenterAndExpand">
+                    <Label FontAttributes="Bold"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="14"
+                           HorizontalTextAlignment="Center"
+                           Text="Tap &quot;ADD&quot; to create a new shopping list" />
+                </StackLayout>
+            </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <SwipeView x:DataType="model:ShoppingList" Padding="5,5,5,0" Margin="0,20">

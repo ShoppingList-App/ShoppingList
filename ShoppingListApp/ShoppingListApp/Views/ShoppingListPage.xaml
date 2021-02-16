@@ -13,11 +13,21 @@
     <RefreshView x:DataType="local:ShoppingListViewModel" Command="{Binding LoadShoppingItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ShoppingListView"
                         ItemsSource="{Binding ShoppingItems}"
-                        SelectionMode="None"
-                        EmptyView="Tap &quot;ADD&quot; to put a new shopping item onto your list">
+                        SelectionMode="None">
             <CollectionView.Header>
                 <Label Padding="5,5,5,5" Text="double tap on item to remove from list"/>
             </CollectionView.Header>
+            <CollectionView.EmptyView>
+                <StackLayout Spacing="15"
+                             VerticalOptions="CenterAndExpand">
+                    <Label FontAttributes="Bold"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="14"
+                           HorizontalTextAlignment="Center"
+                           Text="Tap &quot;ADD&quot; to put a new shopping item onto your list" />
+                </StackLayout>
+            </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid x:DataType="model:ShoppingItem" Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
