@@ -12,7 +12,7 @@ namespace ShoppingListApp.ViewModels
     {
         private StoreItem selectedStoreItem;
         private string text;
-        private uint amount;
+        private uint amount = 1;
         private string unit;
 
         public ObservableCollection<StoreItem> StoreItems { get; }
