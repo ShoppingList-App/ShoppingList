@@ -41,10 +41,6 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Button Margin="0,10,0,0" Text="Delete Database"
-                        Command="{Binding DeleteDatabaseCommand}"
-                        BackgroundColor="Red"
-                        TextColor="Black" />
             </StackLayout>
         </ScrollView>
     </Grid>

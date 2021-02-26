@@ -1,4 +1,5 @@
 ﻿using ShoppingListApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -122,6 +123,12 @@ namespace ShoppingListApp.Services
         {
             // nothing do, storeItem is reference, it's already updated
             return Task.CompletedTask;
+        }
+
+        /* MAINTENANCE */
+        public async Task RecalculateStoreItemSort()
+        {
+            throw new NotImplementedException();
         }
 
         /* DANGER ZONE */

@@ -102,6 +102,27 @@ namespace ShoppingListApp.Services
             _ = await db.UpdateAsync(storeItem);
         }
 
+        /* MAINTENANCE */
+        public async Task RecalculateStoreItemSort()
+        {
+            List<StoreItem> storeItems = await db.QueryAsync<StoreItem>("SELECT * FROM StoreItem ORDER BY SortKey, Text");
+            for (uint i = 0; i < storeItems.Count; i++)
+            {
+                if (i <= int.MaxValue)
+                {
+                    StoreItem si = storeItems[(int)i];
+                    // i is alway smaller than uint.MaxValue because of the if above
+                    // so it's safe to add 1
+                    si.SortKey = i + 1;
+                    await UpdateStoreItemAsync(si);
+                } else
+                {
+                    throw new Exception("more store items than integer values available. recalcuate not possible");
+                }
+            }
+        }
+
+
         /* DANGER ZONE */
         public async Task ResetDatabaseAsync()
         {

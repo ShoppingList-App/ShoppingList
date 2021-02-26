@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingListApp.Views.SettingsPage"
+             xmlns:vm="clr-namespace:ShoppingListApp.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:SettingsViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Margin="0,10,0,0" Text="Recalculate Store Item Sort"
+                        Command="{Binding RecalculateItemSortCommand}"/>
+            <Button Margin="0,10,0,0" Text="Delete Database"
+                        Command="{Binding DeleteDatabaseCommand}"
+                        BackgroundColor="Red"
+                        TextColor="Black" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
