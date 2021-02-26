@@ -90,10 +90,10 @@ namespace ShoppingListApp.Services
         }
 
         /* SEARCH */
-        public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text)
+        public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, int limit)
         {
             string lowerText = text.ToLower();
-            return await db.Table<StoreItem>().Where(si => si.Text.ToLower().Contains(lowerText)).OrderBy(si => si.Text).ToListAsync();
+            return await db.Table<StoreItem>().Where(si => si.Text.ToLower().Contains(lowerText)).OrderBy(si => si.Text).Take(limit).ToListAsync();
         }
 
         /* UPDATE */

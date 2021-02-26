@@ -10,6 +10,7 @@ namespace ShoppingListApp.ViewModels
     [QueryProperty("ShoppingListId", "ShoppingListId")]
     class NewShoppingItemViewModel : BaseShoppingListViewModel
     {
+        private const int SEARCH_ITEM_LIMIT = 5;
         private StoreItem selectedStoreItem;
         private string text;
         private uint amount = 1;
@@ -120,7 +121,7 @@ namespace ShoppingListApp.ViewModels
 
         public async Task<List<StoreItem>> SearchStoreItemsAsync(string searchText)
         {
-            IEnumerable<StoreItem> items = await ShoppingListDataStore.SearchStoreItemsAsync(searchText);
+            IEnumerable<StoreItem> items = await ShoppingListDataStore.SearchStoreItemsAsync(searchText, SEARCH_ITEM_LIMIT);
             List<StoreItem> ret = new List<StoreItem>();
             ret.AddRange(items);
             return ret;
