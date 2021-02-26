@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                <Entry Text="{Binding Amount, Mode=TwoWay}" Keyboard="Numeric"/>
+                <Entry Text="{Binding Amount, Mode=TwoWay}" Keyboard="Numeric" Focused="OnAmountEntryFocused"/>
                 <Picker ItemsSource="{Binding Source={x:Static model:StaticValues.Units}}" SelectedItem="{Binding Unit, Mode=TwoWay}" Grid.Column="1"/>
             </Grid>
             <StackLayout Orientation="Horizontal">

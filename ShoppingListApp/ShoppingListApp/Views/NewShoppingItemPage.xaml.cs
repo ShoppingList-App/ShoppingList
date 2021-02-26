@@ -19,6 +19,18 @@ namespace ShoppingListApp.Views
             BindingContext = viewModel = new NewShoppingItemViewModel();
         }
 
+        private void OnAmountEntryFocused(object sender, FocusEventArgs e)
+        {
+            if (sender != null && sender is Entry @amountEntry)
+            {
+                Dispatcher.BeginInvokeOnMainThread(() =>
+                {
+                    amountEntry.CursorPosition = 0;
+                    amountEntry.SelectionLength = amountEntry.Text != null ? amountEntry.Text.Length : 0;
+                });
+            }
+        }
+
         private async void OnRebuyTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             // Only get results when it was a user typing, 
@@ -41,5 +53,7 @@ namespace ShoppingListApp.Views
                 viewModel.SelectedStoreItem = @item;
             }
         }
+
+        
     }
 }
