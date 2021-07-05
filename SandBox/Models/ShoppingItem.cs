@@ -22,7 +22,7 @@ namespace ShoppingListApp.Models
         [ForeignKey(typeof(StoreItem))]
         [DataMember(Name = "storeItemId")]
         [JsonProperty(PropertyName = "storeItemId")]
-        public int StoreItemId { get; set; }
+        private int StoreItemId { get; set; }
 
         [ManyToOne(CascadeOperations = CascadeOperation.CascadeRead)]
         [DataMember(Name = "storeItem")]

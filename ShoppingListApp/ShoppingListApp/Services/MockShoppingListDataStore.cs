@@ -126,7 +126,7 @@ namespace ShoppingListApp.Services
         }
 
         /* MAINTENANCE */
-        public async Task RecalculateStoreItemSort()
+        public Task RecalculateStoreItemSort()
         {
             throw new NotImplementedException();
         }
