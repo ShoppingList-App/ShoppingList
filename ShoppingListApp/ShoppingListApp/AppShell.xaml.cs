@@ -1,7 +1,5 @@
-﻿using ShoppingListApp.ViewModels;
-using ShoppingListApp.Views;
+﻿using ShoppingListApp.Views;
 using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace ShoppingListApp
@@ -15,11 +13,20 @@ namespace ShoppingListApp
             Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(NewShoppingListPage)}", typeof(NewShoppingListPage));
             Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(ShoppingListPage)}", typeof(ShoppingListPage));
             Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(ShoppingListPage)}/{nameof(NewShoppingItemPage)}", typeof(NewShoppingItemPage));
+
+            CurrentItem = loginItem;
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//LoginPage");
+            IO.Swagger.Client.Configuration.Username = null;
+            IO.Swagger.Client.Configuration.Password = null;
+
+            Application.Current.Properties.Remove("username");
+            Application.Current.Properties.Remove("password");
+            await Application.Current.SavePropertiesAsync();
+
+            await Current.GoToAsync("//LoginPage");
         }
     }
 }

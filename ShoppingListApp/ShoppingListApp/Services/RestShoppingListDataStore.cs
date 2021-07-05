@@ -10,9 +10,9 @@ namespace ShoppingListApp.Services
 {
     class RestShoppingListDataStore : IShoppingListDataStore
     {
-        private ShoppingListApi shoppingListApi;
-        private ShoppingItemApi shoppingItemApi;
-        private StoreItemApi storeItemApi;
+        private readonly ShoppingListApi shoppingListApi;
+        private readonly ShoppingItemApi shoppingItemApi;
+        private readonly StoreItemApi storeItemApi;
 
         public RestShoppingListDataStore()
         {

@@ -6,7 +6,7 @@ namespace ShoppingListApp.ViewModels
 {
     class NewShoppingListViewModel : BaseShoppingListViewModel
     {
-        private String text;
+        private string text;
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
