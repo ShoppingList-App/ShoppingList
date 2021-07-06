@@ -8,6 +8,8 @@
              Shell.NavBarIsVisible="False">
     <ContentPage.Content>
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+            <Label Text="Server URL" FontSize="Medium" />
+            <Entry Text="{Binding Host}" FontSize="Medium" />
             <Label Text="Username" FontSize="Medium" />
             <Entry Text="{Binding Username}" FontSize="Medium" />
             <Label Text="Password" FontSize="Medium" />

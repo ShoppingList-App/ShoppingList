@@ -1,4 +1,5 @@
 ﻿using ShoppingListApp.Views;
+using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 
@@ -12,11 +13,24 @@ namespace ShoppingListApp.ViewModels
         {
             LoginCommand = new Command(OnLoginClicked);
 
-            if (Application.Current.Properties.ContainsKey("username") && Application.Current.Properties.ContainsKey("password"))
+            if (Application.Current.Properties.ContainsKey("host")
+                && Application.Current.Properties.ContainsKey("username")
+                && Application.Current.Properties.ContainsKey("password"))
             {
+                Host = Application.Current.Properties["host"].ToString();
                 Username = Application.Current.Properties["username"].ToString();
                 Password = Application.Current.Properties["password"].ToString();
                 _ = Shell.Current.GoToAsync($"//{nameof(ShoppingListsPage)}");
+            }
+        }
+
+        public string Host
+        {
+            set
+            {
+                Application.Current.Properties["host"] = value;
+                string url = $"https://{value}/v1";
+                IO.Swagger.Client.Configuration.DefaultApiClient = new IO.Swagger.Client.ApiClient(url);
             }
         }
 
@@ -40,7 +54,6 @@ namespace ShoppingListApp.ViewModels
 
         private async void OnLoginClicked(object obj)
         {
-            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             await Application.Current.SavePropertiesAsync();
             await Shell.Current.GoToAsync($"//{nameof(ShoppingListsPage)}");
         }

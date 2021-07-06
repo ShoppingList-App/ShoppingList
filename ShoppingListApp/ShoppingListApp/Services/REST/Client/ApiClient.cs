@@ -10,6 +10,7 @@ using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Extensions;
+using System.Diagnostics;
 
 namespace IO.Swagger.Client
 {
@@ -200,6 +201,7 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
+                Debug.WriteLine(content);
                 return JsonConvert.DeserializeObject(content, type);
             }
             catch (IOException e)
