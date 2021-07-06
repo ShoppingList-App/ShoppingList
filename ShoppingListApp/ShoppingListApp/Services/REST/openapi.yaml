@@ -166,11 +166,6 @@ paths:
       summary: remove Shopping Item from Shopping List
       operationId: removeShoppingItem
       parameters:
-        - name: shoppingListId
-          in: query
-          required: true
-          schema:
-            type: integer
         - name: shoppingItemId
           in: query
           required: true
