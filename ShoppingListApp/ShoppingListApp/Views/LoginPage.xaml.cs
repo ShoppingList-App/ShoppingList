@@ -16,6 +16,15 @@ namespace ShoppingListApp.Views
         {
             InitializeComponent();
             this.BindingContext = new LoginViewModel();
+            Appearing += LoginPage_Appearing;
+        }
+
+        private void LoginPage_Appearing(object sender, EventArgs e)
+        {
+            // force empty fields on every page view
+            host.Text = "";
+            username.Text = "";
+            password.Text = "";
         }
     }
 }
