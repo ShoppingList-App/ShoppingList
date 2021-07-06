@@ -1,17 +1,23 @@
-﻿using ShoppingListApp.Views;
+﻿using Newtonsoft.Json;
+using ShoppingListApp.Models;
+using ShoppingListApp.Views;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
+using ZXing;
 
 namespace ShoppingListApp.ViewModels
 {
     public class LoginViewModel : BaseShoppingListViewModel
     {
         public Command LoginCommand { get; }
+        public Command<Result> ScanCommand { get; }
+
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
+            ScanCommand = new Command<Result>(OnScanResult);
 
             if (CheckConfiguration())
             {
@@ -19,10 +25,8 @@ namespace ShoppingListApp.ViewModels
                 {
                     SetConfiguration();
                     _ = Shell.Current.GoToAsync($"//{nameof(ShoppingListsPage)}");
-                } catch (Exception)
-                {
-                    // nix
                 }
+                catch { }
             }
         }
 
@@ -74,9 +78,26 @@ namespace ShoppingListApp.ViewModels
                     SetConfiguration();
                     await Shell.Current.GoToAsync($"//{nameof(ShoppingListsPage)}");
                 }
-            } catch (Exception)
+            }
+            catch { }
+        }
+
+        private async void OnScanResult(Result result)
+        {
+            if (result.BarcodeFormat == BarcodeFormat.QR_CODE)
             {
-                // nix
+                try
+                {
+                    Config conf = JsonConvert.DeserializeObject<Config>(result.Text);
+                    Application.Current.Properties["host"] = conf.Host;
+                    Application.Current.Properties["username"] = conf.Username;
+                    Application.Current.Properties["password"] = conf.Password;
+
+                    await Application.Current.SavePropertiesAsync();
+                    SetConfiguration();
+                    await Shell.Current.GoToAsync($"//{nameof(ShoppingListsPage)}");
+                }
+                catch { }
             }
         }
     }

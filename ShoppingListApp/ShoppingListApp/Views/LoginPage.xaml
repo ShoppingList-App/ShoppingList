@@ -3,18 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxmob="clr-namespace:ZXing.Mobile;assembly=ZXing.Net.Mobile.Core"
+             xmlns:ZXing="clr-namespace:ZXing;assembly=zxing.portable"
              mc:Ignorable="d"
              x:Class="ShoppingListApp.Views.LoginPage"
              Shell.NavBarIsVisible="False">
-    <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Label Text="Server URL" FontSize="Medium" />
-            <Entry Text="{Binding Host}" FontSize="Medium" x:Name="host" />
-            <Label Text="Username" FontSize="Medium" />
-            <Entry Text="{Binding Username}" FontSize="Medium" x:Name="username" />
-            <Label Text="Password" FontSize="Medium" />
-            <Entry Text="{Binding Password}" FontSize="Medium" IsPassword="true" x:Name="password" />
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
+        <StackLayout Padding="10,0,10,0"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            <StackLayout IsVisible="True" x:Name="form"
+                         VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="FillAndExpand">
+                <Label Text="Server URL" FontSize="Medium" />
+                <Entry Text="{Binding Host}" FontSize="Medium" x:Name="host" />
+                <Label Text="Username" FontSize="Medium" />
+                <Entry Text="{Binding Username}" FontSize="Medium" x:Name="username" />
+                <Label Text="Password" FontSize="Medium" />
+                <Entry Text="{Binding Password}" FontSize="Medium" IsPassword="true" x:Name="password" />
+                <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
+                <Button VerticalOptions="Center" Text="Scan Share Code" Clicked="Scan_Clicked"/>
+            </StackLayout>
+            <StackLayout IsVisible="False" x:Name="scanner"
+                         VerticalOptions="FillAndExpand"
+                         HorizontalOptions="FillAndExpand"
+                         Padding="0, 10, 0, 10">
+                <Grid
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+                    <forms:ZXingScannerView
+                        x:Name="zxing"
+                        IsScanning="False"
+                        IsAnalyzing="False"
+                        ScanResultCommand="{Binding ScanCommand}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                    </forms:ZXingScannerView>
+                    <forms:ZXingDefaultOverlay
+                        TopText="Menu -> Share on another mobile"
+                        BottomText="Hold your phone up to the QR-Code"/>
+            </Grid>
+                <Button VerticalOptions="Center" Text="Cancel" Clicked="ScanCancel_Clicked"/>
+            </StackLayout>
         </StackLayout>
-    </ContentPage.Content>
 </ContentPage>

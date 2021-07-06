@@ -9,3 +9,6 @@
 	
 - RestSharp (nuget RestSharp) by John Sheehan, Andrew Young, Alexey Zimarev and RestSharp community
 	https://github.com/restsharp/RestSharp
+
+- ZXing.Net (nuget ZXing.Net) by Michael Jahn
+	https://github.com/micjahn/ZXing.Net
