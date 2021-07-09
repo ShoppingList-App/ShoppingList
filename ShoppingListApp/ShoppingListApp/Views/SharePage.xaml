@@ -2,20 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingListApp.Views.SharePage"
-             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms" xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable">
+             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     x:Name="layout">
             <forms:ZXingBarcodeImageView
                 x:Name="QRCode"
                 BarcodeFormat="QR_CODE"
-                HeightRequest="300"
-                WidthRequest="300"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                IsVisible="True">
-                <forms:ZXingBarcodeImageView.BarcodeOptions>
-                    <zxcm:EncodingOptions Width="300" Height="300" />
-                </forms:ZXingBarcodeImageView.BarcodeOptions>
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
             </forms:ZXingBarcodeImageView>
         </StackLayout>
     </ContentPage.Content>

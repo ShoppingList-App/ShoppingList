@@ -1,4 +1,6 @@
-﻿using ShoppingListApp.ViewModels;
+﻿using Newtonsoft.Json;
+using ShoppingListApp.Models;
+using ShoppingListApp.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,34 +18,34 @@ namespace ShoppingListApp.Views
             InitializeComponent();
             BindingContext = model;
             Appearing += LoginPage_Appearing;
-            zxing.Options.PossibleFormats = new System.Collections.Generic.List<ZXing.BarcodeFormat>
-            {
-                ZXing.BarcodeFormat.QR_CODE
-            };
         }
 
         private void LoginPage_Appearing(object sender, EventArgs e)
         {
-            // force empty fields on every page view
-            host.Text = "";
-            username.Text = "";
-            password.Text = "";
+            if (model.Barcode != null && model.Barcode != string.Empty)
+            {
+                // set values by barcode
+                try
+                {
+                    Config loginConf = JsonConvert.DeserializeObject<Config>(model.Barcode);
+                    host.Text = loginConf.Host;
+                    username.Text = loginConf.Username;
+                    password.Text = loginConf.Password;
+                }
+                catch { }
+            } else
+            {
+                // force empty fields on every page view
+                host.Text = "";
+                username.Text = "";
+                password.Text = "";
+            }
         }
 
         private void Scan_Clicked(object sender, EventArgs e)
         {
-            form.IsVisible = false;
-            scanner.IsVisible = true;
-            zxing.IsScanning = true;
-            zxing.IsAnalyzing = true;
-        }
-
-        private void ScanCancel_Clicked(object sender, EventArgs e)
-        {
-            zxing.IsScanning = false;
-            zxing.IsAnalyzing = false;
-            scanner.IsVisible = false;
-            form.IsVisible = true;
+            model.Barcode = "";
+            Shell.Current.GoToAsync(nameof(ScanPage));
         }
     }
 }

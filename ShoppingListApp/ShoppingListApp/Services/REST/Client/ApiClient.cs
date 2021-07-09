@@ -201,7 +201,6 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                Debug.WriteLine(content);
                 return JsonConvert.DeserializeObject(content, type);
             }
             catch (IOException e)

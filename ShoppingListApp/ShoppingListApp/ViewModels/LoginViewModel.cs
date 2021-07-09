@@ -8,6 +8,7 @@ using ZXing;
 
 namespace ShoppingListApp.ViewModels
 {
+    [QueryProperty("Barcode", "Barcode")]
     public class LoginViewModel : BaseShoppingListViewModel
     {
         public Command LoginCommand { get; }
@@ -17,7 +18,6 @@ namespace ShoppingListApp.ViewModels
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
-            ScanCommand = new Command<Result>(OnScanResult);
 
             if (CheckConfiguration())
             {
@@ -54,6 +54,8 @@ namespace ShoppingListApp.ViewModels
             }
         }
 
+        public string Barcode { get; set; }
+
         private void SetConfiguration()
         {
             IO.Swagger.Client.Configuration.DefaultApiClient = new IO.Swagger.Client.ApiClient($"https://{Application.Current.Properties["host"]}/v1");
@@ -80,25 +82,6 @@ namespace ShoppingListApp.ViewModels
                 }
             }
             catch { }
-        }
-
-        private async void OnScanResult(Result result)
-        {
-            if (result.BarcodeFormat == BarcodeFormat.QR_CODE)
-            {
-                try
-                {
-                    Config conf = JsonConvert.DeserializeObject<Config>(result.Text);
-                    Application.Current.Properties["host"] = conf.Host;
-                    Application.Current.Properties["username"] = conf.Username;
-                    Application.Current.Properties["password"] = conf.Password;
-
-                    await Application.Current.SavePropertiesAsync();
-                    SetConfiguration();
-                    await Shell.Current.GoToAsync($"//{nameof(ShoppingListsPage)}");
-                }
-                catch { }
-            }
         }
     }
 }

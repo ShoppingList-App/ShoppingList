@@ -12,6 +12,13 @@ namespace ShoppingListApp.Views
         {
             InitializeComponent();
             QRCode.BarcodeValue = GetBarcodeValue();
+            SizeChanged += SharePage_SizeChanged;
+        }
+
+        private void SharePage_SizeChanged(object sender, System.EventArgs e)
+        {
+            QRCode.BarcodeOptions.Width = (int)layout.Width;
+            QRCode.BarcodeOptions.Height = (int)layout.Height;
         }
 
         private string GetBarcodeValue()

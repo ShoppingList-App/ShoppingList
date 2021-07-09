@@ -85,7 +85,7 @@
         </ShellContent>
     </FlyoutItem>
     <FlyoutItem Title="Share" Icon="icon_about.png">
-        <ShellContent Route="SharePage" ContentTemplate="{DataTemplate local:SharePage}" />
+        <ShellContent Route="SharePage" ContentTemplate="{DataTemplate local:SharePage}" x:Name="sharePage" />
     </FlyoutItem>
     <FlyoutItem Title="Settings" Icon="icon_about.png">
         <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate local:SettingsPage}" />
@@ -106,7 +106,8 @@
         await Shell.Current.GoToAsync("//LoginPage");
     -->
     <TabBar>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" x:Name="loginItem" />
+        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" x:Name="loginPage" />
+        <ShellContent Route="ScanPage" ContentTemplate="{DataTemplate local:ScanPage}" x:Name="scanPage" />
     </TabBar>
 
     <!-- Optional Templates 
