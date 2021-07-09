@@ -10,7 +10,7 @@
         <ToolbarItem Text="Add" Command="{Binding AddShoppingListCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <RefreshView x:DataType="local:ShoppingListsViewModel" Command="{Binding LoadShoppingListsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <RefreshView x:DataType="local:ShoppingListsViewModel" Command="{Binding LoadShoppingListsCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
         <CollectionView x:Name="ShoppingListsView"
                         ItemsSource="{Binding ShoppingLists}"
                         SelectionMode="None">
