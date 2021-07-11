@@ -49,7 +49,7 @@
                             </Label.Triggers>
                         </Label>
                         <Label Text="{Binding AmountDisplay}" 
-                               LineBreakMode="NoWrap" 
+                               LineBreakMode="WordWrap" 
                                Style="{StaticResource LabelButton}"
                                VerticalTextAlignment="Center"
                                Grid.Column="1">

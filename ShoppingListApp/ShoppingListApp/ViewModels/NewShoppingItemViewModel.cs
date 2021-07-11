@@ -70,30 +70,6 @@ namespace ShoppingListApp.ViewModels
             set => SetProperty(ref unit, value);
         }
 
-        public string Barcode
-        {
-            set
-            {
-                if (value != null)
-                {
-                    IEnumerable<StoreItem> result = ShoppingListDataStore.SearchStoreItemsAsync(null, value, null).Result;
-                    if (result.Count() > 1)
-                    {
-                        SearchResult = result;
-                    }
-                    else if (result.Count() < 1)
-                    {
-                        SearchResult = null;
-                    }
-                    else
-                    {
-                        // THERE CAN ONLY BE ONE
-                        SelectedStoreItem = result.First();
-                    }
-                }
-            }
-        }
-
         public int ShoppingListId { get; set; }
 
         private bool ValidateSave()
@@ -151,9 +127,25 @@ namespace ShoppingListApp.ViewModels
             await Application.Current.MainPage.Navigation.PushAsync(sp);
         }
 
-        private void Sp_OnScan(string obj)
+        private void Sp_OnScan(string barcode)
         {
-            Barcode = obj;
+            if (barcode != null)
+            {
+                IEnumerable<StoreItem> result = ShoppingListDataStore.SearchStoreItemsAsync(null, barcode, null).Result;
+                if (result.Count() > 1)
+                {
+                    SearchResult = result;
+                }
+                else if (result.Count() < 1)
+                {
+                    SearchResult = null;
+                }
+                else
+                {
+                    // THERE CAN ONLY BE ONE
+                    SelectedStoreItem = result.First();
+                }
+            }
         }
     }
 }

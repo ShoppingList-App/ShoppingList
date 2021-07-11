@@ -11,12 +11,15 @@
                      Padding="15"
                      HorizontalOptions="FillAndExpand"
                      VerticalOptions="FillAndExpand">
-            <forms:AutoSuggestBox PlaceholderText="Search Article"
-                                  WidthRequest="200"
-                                  TextChanged="OnSearchTextChanged"
-                                  SuggestionChosen="OnSearchSuggestionChosen"
-                                  Text="{Binding SearchText, Mode=TwoWay}"
-                                  ItemsSource="{Binding SearchResult}"/>
+            <StackLayout Orientation="Horizontal">
+                <forms:AutoSuggestBox PlaceholderText="Search Article"
+                                      TextChanged="OnSearchTextChanged"
+                                      SuggestionChosen="OnSearchSuggestionChosen"
+                                      Text="{Binding SearchText, Mode=TwoWay}"
+                                      ItemsSource="{Binding SearchResult}"
+                                      HorizontalOptions="FillAndExpand"/>
+                <Button Text="Scan" Command="{Binding ScanSearchCommand}"/>
+            </StackLayout>
             <Label Text="Text" FontSize="Medium" />
             <Entry Text="{Binding Text, Mode=TwoWay}"/>
             <Label Text="Unit" FontSize="Medium" />

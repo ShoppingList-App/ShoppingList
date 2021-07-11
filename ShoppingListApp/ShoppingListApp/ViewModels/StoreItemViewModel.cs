@@ -1,6 +1,7 @@
 ﻿using ShoppingListApp.Models;
 using ShoppingListApp.Views;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -15,16 +16,19 @@ namespace ShoppingListApp.ViewModels
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
+        public Command ScanSearchCommand { get; }
         public Command ScanCommand { get; }
 
         public StoreItemViewModel()
         {
             SaveCommand = new Command(OnSave, ValidateSave);
-            CancelCommand = new Command(OnCancel);
+            CancelCommand = new Command(OnCancel, ValidateCancel);
+            ScanSearchCommand = new Command(OnScanSearch);
             ScanCommand = new Command(OnScan, ValidateScan);
 
             // erzeugt eine neue Funktion die zu PropertyChangedEventHandler passt und ruft darun SaveCommand.ChangeCanExecute auf => WTF????
             PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
+            PropertyChanged += (_, __) => CancelCommand.ChangeCanExecute();
             PropertyChanged += (_, __) => ScanCommand.ChangeCanExecute();
         }
 
@@ -119,6 +123,11 @@ namespace ShoppingListApp.ViewModels
             SearchResult = null;
         }
 
+        private bool ValidateCancel()
+        {
+            return SelectedStoreItem != null;
+        }
+
         private async void OnScan()
         {
             ScanPage sp = new ScanPage();
@@ -134,6 +143,33 @@ namespace ShoppingListApp.ViewModels
         private bool ValidateScan()
         {
             return SelectedStoreItem != null;
+        }
+        private async void OnScanSearch()
+        {
+            ScanPage sp = new ScanPage();
+            sp.OnScan += Sp_OnScanSearch;
+            await Application.Current.MainPage.Navigation.PushAsync(sp);
+        }
+
+        private void Sp_OnScanSearch(string barcode)
+        {
+            if (barcode != null)
+            {
+                IEnumerable<StoreItem> result = ShoppingListDataStore.SearchStoreItemsAsync(null, barcode, null).Result;
+                if (result.Count() > 1)
+                {
+                    SearchResult = result;
+                }
+                else if (result.Count() < 1)
+                {
+                    SearchResult = null;
+                }
+                else
+                {
+                    // THERE CAN ONLY BE ONE
+                    SelectedStoreItem = result.First();
+                }
+            }
         }
     }
 }
