@@ -37,18 +37,12 @@ namespace ShoppingListApp.ViewModels
 
         public string Username
         {
-            set
-            {
-                Application.Current.Properties["username"] = value;
-            }
+            set => Application.Current.Properties["username"] = value;
         }
 
         public string Password
         {
-            set
-            {
-                Application.Current.Properties["password"] = value;
-            }
+            set => Application.Current.Properties["password"] = value;
         }
 
         public string Barcode { get; set; }
