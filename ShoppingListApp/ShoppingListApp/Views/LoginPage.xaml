@@ -9,13 +9,13 @@
         <StackLayout Padding="10,0,10,0"
                      VerticalOptions="Center"
                      HorizontalOptions="FillAndExpand">
-                <Label Text="Server URL" FontSize="Medium" />
-                <Entry Text="{Binding Host}" FontSize="Medium" x:Name="host" />
-                <Label Text="Username" FontSize="Medium" />
-                <Entry Text="{Binding Username}" FontSize="Medium" x:Name="username" />
-                <Label Text="Password" FontSize="Medium" />
-                <Entry Text="{Binding Password}" FontSize="Medium" IsPassword="true" x:Name="password" />
-                <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-                <Button VerticalOptions="Center" Text="Scan Share Code" Clicked="Scan_Clicked"/>
+            <Label Text="Server URL" FontSize="Medium" />
+            <Entry Text="{Binding Host}" FontSize="Medium" x:Name="host" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" Keyboard="Url"/>
+            <Label Text="Username" FontSize="Medium" />
+            <Entry Text="{Binding Username}" FontSize="Medium" x:Name="username"  IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"/>
+            <Label Text="Password" FontSize="Medium" />
+            <Entry Text="{Binding Password}" FontSize="Medium" IsPassword="true" x:Name="password"  IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"/>
+            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
+            <Button VerticalOptions="Center" Text="Scan Share Code" Clicked="Scan_Clicked"/>
         </StackLayout>
 </ContentPage>

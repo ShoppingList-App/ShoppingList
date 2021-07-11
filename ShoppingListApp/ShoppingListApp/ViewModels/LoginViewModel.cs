@@ -34,7 +34,13 @@ namespace ShoppingListApp.ViewModels
         {
             set
             {
-                Application.Current.Properties["host"] = value;
+                if (Uri.TryCreate(value, UriKind.Absolute, out _))
+                {
+                    Application.Current.Properties["host"] = value;
+                } else
+                {
+                    Application.Current.Properties["host"] = "";
+                }
             }
         }
 
@@ -58,7 +64,7 @@ namespace ShoppingListApp.ViewModels
 
         private void SetConfiguration()
         {
-            IO.Swagger.Client.Configuration.DefaultApiClient = new IO.Swagger.Client.ApiClient($"https://{Application.Current.Properties["host"]}/v1");
+            IO.Swagger.Client.Configuration.DefaultApiClient = new IO.Swagger.Client.ApiClient(Application.Current.Properties["host"].ToString());
             IO.Swagger.Client.Configuration.Username = Application.Current.Properties["username"].ToString();
             IO.Swagger.Client.Configuration.Password = Application.Current.Properties["password"].ToString();
 
