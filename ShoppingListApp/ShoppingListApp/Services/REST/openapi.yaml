@@ -4,7 +4,12 @@ info:
   description: ShoppingList Interface
   version: 1.0.0
 servers:
-  - url: 'https://sl.test.devloop.de/v1'
+  - url: 'https://{host}/{version}'
+    variables:
+      host:
+        default: sl.test.devloop.de
+      version:
+        default: v1
 tags:
   - name: Shopping List
     description: Shopping List operations
