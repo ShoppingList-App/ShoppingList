@@ -53,7 +53,5 @@ namespace ShoppingListApp.Views
                 viewModel.SelectedStoreItem = @item;
             }
         }
-
-        
     }
 }

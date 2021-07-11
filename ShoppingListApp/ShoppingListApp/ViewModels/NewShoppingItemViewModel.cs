@@ -16,8 +16,6 @@ namespace ShoppingListApp.ViewModels
         private uint amount = 1;
         private string unit;
 
-        public ObservableCollection<StoreItem> StoreItems { get; }
-
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
 
@@ -31,19 +29,6 @@ namespace ShoppingListApp.ViewModels
             PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
 
             unit = StaticValues.Units.First();
-
-            StoreItems = new ObservableCollection<StoreItem>();
-            LoadStoreItems();
-        }
-
-        private void LoadStoreItems()
-        {
-            StoreItems.Clear();
-            IEnumerable<StoreItem> items = ShoppingListDataStore.GetStoreItemsAsync().Result;
-            foreach (StoreItem item in items)
-            {
-                StoreItems.Add(item);
-            }
         }
 
         public StoreItem SelectedStoreItem
