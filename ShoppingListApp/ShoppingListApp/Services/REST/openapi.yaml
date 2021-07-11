@@ -107,7 +107,7 @@ paths:
     get:
       tags:
         - Shopping Item
-      summary: get/search all Shopping Items of Shopping List
+      summary: get all Shopping Items of Shopping List
       operationId: getShoppingItems
       parameters:
         - name: shoppingListId
@@ -189,7 +189,7 @@ paths:
     get:
       tags:
         - Store Item
-      summary: get all Store Items
+      summary: get/search all Store Items
       operationId: getStoreItems
       parameters:
         - name: text
@@ -317,6 +317,9 @@ components:
         sortKey:
           type: integer
           format: uint
+          nullable: true
+        barcode:
+          type: string
           nullable: true
   securitySchemes:
     basicAuth:

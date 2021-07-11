@@ -20,6 +20,9 @@ namespace ShoppingListApp.Models
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; set; }
 
+        [JsonProperty(PropertyName = "barcode")]
+        public string Barcode { get; set; }
+
         [Indexed]
         [DataMember(Name = "sortKey")]
         [JsonProperty(PropertyName = "sortKey")]

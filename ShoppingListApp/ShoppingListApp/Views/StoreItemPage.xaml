@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+             xmlns:viewmodels="clr-namespace:ShoppingListApp.ViewModels"
+             xmlns:model="clr-namespace:ShoppingListApp.Models"
+             x:DataType="viewmodels:StoreItemViewModel"
+             x:Class="ShoppingListApp.Views.StoreItemPage">
+    <ContentPage.Content>
+        <StackLayout Spacing="3"
+                     Padding="15"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand">
+            <forms:AutoSuggestBox PlaceholderText="Search Article"
+                                  WidthRequest="200"
+                                  TextChanged="OnSearchTextChanged"
+                                  SuggestionChosen="OnSearchSuggestionChosen"
+                                  Text="{Binding SearchText, Mode=TwoWay}"
+                                  ItemsSource="{Binding SearchResult}"/>
+            <Label Text="Text" FontSize="Medium" />
+            <Entry Text="{Binding Text, Mode=TwoWay}"/>
+            <Label Text="Unit" FontSize="Medium" />
+            <Picker ItemsSource="{Binding Source={x:Static model:StaticValues.Units}}" SelectedItem="{Binding Unit, Mode=TwoWay}"/>
+            <Label Text="Barcode" FontSize="Medium" />
+            <StackLayout Orientation="Horizontal">
+                <Entry Text="{Binding Barcode, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Scan" Command="{Binding ScanCommand}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand" />
+                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

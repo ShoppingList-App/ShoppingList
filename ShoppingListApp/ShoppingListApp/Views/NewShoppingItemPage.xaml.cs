@@ -11,7 +11,7 @@ namespace ShoppingListApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewShoppingItemPage : ContentPage
     {
-        NewShoppingItemViewModel viewModel;
+        private readonly NewShoppingItemViewModel viewModel;
 
         public NewShoppingItemPage()
         {
@@ -44,11 +44,10 @@ namespace ShoppingListApp.Views
             }
         }
 
-
-        private void OnRebuySuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private void OnRebuySuggestionChosen(AutoSuggestBox _, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             // Set sender.Text. You can use args.SelectedItem to build your text string.
-            if (args.SelectedItem != null && args.SelectedItem is StoreItem @item)
+            if (args != null && args.SelectedItem != null && args.SelectedItem is StoreItem @item)
             {
                 viewModel.SelectedStoreItem = @item;
             }

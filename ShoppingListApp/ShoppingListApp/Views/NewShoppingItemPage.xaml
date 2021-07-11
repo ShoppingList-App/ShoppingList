@@ -4,6 +4,8 @@
              x:Class="ShoppingListApp.Views.NewShoppingItemPage"
              xmlns:model="clr-namespace:ShoppingListApp.Models"
              xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+             xmlns:viewmodels="clr-namespace:ShoppingListApp.ViewModels"
+             x:DataType="viewmodels:NewShoppingItemViewModel"
              Title="{Binding Title}">
 
     <ContentPage.Content>
