@@ -61,6 +61,8 @@ namespace ShoppingListApp.ViewModels
             IO.Swagger.Client.Configuration.DefaultApiClient = new IO.Swagger.Client.ApiClient($"https://{Application.Current.Properties["host"]}/v1");
             IO.Swagger.Client.Configuration.Username = Application.Current.Properties["username"].ToString();
             IO.Swagger.Client.Configuration.Password = Application.Current.Properties["password"].ToString();
+
+            ShoppingListDataStore.LoginUpdate();
         }
 
         private bool CheckConfiguration()

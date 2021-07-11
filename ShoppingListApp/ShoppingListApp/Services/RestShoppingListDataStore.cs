@@ -10,11 +10,16 @@ namespace ShoppingListApp.Services
 {
     class RestShoppingListDataStore : IShoppingListDataStore
     {
-        private readonly ShoppingListApi shoppingListApi;
-        private readonly ShoppingItemApi shoppingItemApi;
-        private readonly StoreItemApi storeItemApi;
+        private ShoppingListApi shoppingListApi;
+        private ShoppingItemApi shoppingItemApi;
+        private StoreItemApi storeItemApi;
 
         public RestShoppingListDataStore()
+        {
+            CreateAPIs();
+        }
+
+        private void CreateAPIs()
         {
             shoppingListApi = new ShoppingListApi();
             shoppingItemApi = new ShoppingItemApi();
@@ -100,7 +105,12 @@ namespace ShoppingListApp.Services
             return storeItems;
         }
 
-        public async Task RecalculateStoreItemSort()
+        public void LoginUpdate()
+        {
+            CreateAPIs();
+        }
+
+        public async Task RecalculateStoreItemSortAsync()
         {
             await Task.Run(() =>
             {

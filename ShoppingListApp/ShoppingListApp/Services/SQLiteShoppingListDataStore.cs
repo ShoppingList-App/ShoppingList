@@ -103,7 +103,7 @@ namespace ShoppingListApp.Services
         }
 
         /* MAINTENANCE */
-        public async Task RecalculateStoreItemSort()
+        public async Task RecalculateStoreItemSortAsync()
         {
             List<StoreItem> storeItems = await db.QueryAsync<StoreItem>("SELECT * FROM StoreItem ORDER BY SortKey, Text");
             for (uint i = 0; i < storeItems.Count; i++)
@@ -131,5 +131,7 @@ namespace ShoppingListApp.Services
             File.Delete(databasePath);
             InitDatabase();
         }
+
+        public void LoginUpdate() { }
     }
 }

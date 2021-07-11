@@ -16,7 +16,7 @@ namespace ShoppingListApp.ViewModels
 
         private async void RecalculateItemSort()
         {
-            await ShoppingListDataStore.RecalculateStoreItemSort();
+            await ShoppingListDataStore.RecalculateStoreItemSortAsync();
         }
 
         private async void DeleteDatabase()

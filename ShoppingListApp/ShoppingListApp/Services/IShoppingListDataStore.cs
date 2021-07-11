@@ -29,7 +29,8 @@ namespace ShoppingListApp.Services
         Task UpdateStoreItemAsync(StoreItem storeItem);
 
         /* MAINTENANCE */
-        Task RecalculateStoreItemSort();
+        Task RecalculateStoreItemSortAsync();
+        void LoginUpdate();
 
         /* DANGER ZONE */
         Task ResetDatabaseAsync();

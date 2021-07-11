@@ -126,7 +126,7 @@ namespace ShoppingListApp.Services
         }
 
         /* MAINTENANCE */
-        public Task RecalculateStoreItemSort()
+        public Task RecalculateStoreItemSortAsync()
         {
             throw new NotImplementedException();
         }
@@ -146,5 +146,7 @@ namespace ShoppingListApp.Services
         {
             return shoppingLists.FirstOrDefault(s => s.Id == shoppingListId);
         }
+
+        public void LoginUpdate() { }
     }
 }
