@@ -1,4 +1,5 @@
 ﻿using ShoppingListApp.Models;
+using ShoppingListApp.Views;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,15 +15,19 @@ namespace ShoppingListApp.ViewModels
         private string text;
         private uint amount = 1;
         private string unit;
+        private IEnumerable<StoreItem> searchResult;
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
+        public Command ScanCommand { get; }
+
 
         public NewShoppingItemViewModel()
         {
             Title = "New Shopping Item";
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
+            ScanCommand = new Command(OnScan);
 
             // erzeugt eine neue Funktion die zu PropertyChangedEventHandler passt und ruft darun SaveCommand.ChangeCanExecute auf => WTF????
             PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
@@ -41,6 +46,12 @@ namespace ShoppingListApp.ViewModels
             }
         }
 
+        public IEnumerable<StoreItem> SearchResult
+        {
+            get => searchResult;
+            set => SetProperty(ref searchResult, value);
+        }
+
         public string Text
         {
             get => text;
@@ -57,6 +68,30 @@ namespace ShoppingListApp.ViewModels
         {
             get => unit;
             set => SetProperty(ref unit, value);
+        }
+
+        public string Barcode
+        {
+            set
+            {
+                if (value != null)
+                {
+                    IEnumerable<StoreItem> result = ShoppingListDataStore.SearchStoreItemsAsync(null, value, null).Result;
+                    if (result.Count() > 1)
+                    {
+                        SearchResult = result;
+                    }
+                    else if (result.Count() < 1)
+                    {
+                        SearchResult = null;
+                    }
+                    else
+                    {
+                        // THERE CAN ONLY BE ONE
+                        SelectedStoreItem = result.First();
+                    }
+                }
+            }
         }
 
         public int ShoppingListId { get; set; }
@@ -100,15 +135,25 @@ namespace ShoppingListApp.ViewModels
             await ShoppingListDataStore.AddShoppingItemAsync(ShoppingListId, shoppingItem);
 
             // This will pop the current page off the navigation stack
+            
             await Shell.Current.GoToAsync("..");
         }
 
-        public async Task<List<StoreItem>> SearchStoreItemsAsync(string searchText)
+        public async Task SearchStoreItemsAsync(string searchText)
         {
-            IEnumerable<StoreItem> items = await ShoppingListDataStore.SearchStoreItemsAsync(searchText, SEARCH_ITEM_LIMIT);
-            List<StoreItem> ret = new List<StoreItem>();
-            ret.AddRange(items);
-            return ret;
+            SearchResult = await ShoppingListDataStore.SearchStoreItemsAsync(searchText, null, SEARCH_ITEM_LIMIT);
+        }
+
+        private async void OnScan()
+        {
+            ScanPage sp = new ScanPage();
+            sp.OnScan += Sp_OnScan;
+            await Application.Current.MainPage.Navigation.PushAsync(sp);
+        }
+
+        private void Sp_OnScan(string obj)
+        {
+            Barcode = obj;
         }
     }
 }

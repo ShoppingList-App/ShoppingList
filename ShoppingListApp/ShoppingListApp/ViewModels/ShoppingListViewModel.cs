@@ -2,7 +2,6 @@
 using ShoppingListApp.Views;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -55,7 +54,8 @@ namespace ShoppingListApp.ViewModels
                 if (selectedMode == Mode.Modify)
                 {
                     items = await ShoppingListDataStore.GetShoppingItemsAsync(shoppingListId);
-                } else
+                }
+                else
                 {
                     items = await ShoppingListDataStore.GetShoppingItemsOrderBySortKeyAsync(shoppingListId);
                 }
@@ -64,10 +64,7 @@ namespace ShoppingListApp.ViewModels
                     ShoppingItems.Add(item);
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            catch (Exception ex) { }
             finally
             {
                 IsBusy = false;

@@ -13,7 +13,6 @@ namespace ShoppingListApp
             Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(NewShoppingListPage)}", typeof(NewShoppingListPage));
             Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(ShoppingListPage)}", typeof(ShoppingListPage));
             Routing.RegisterRoute($"{nameof(ShoppingListsPage)}/{nameof(ShoppingListPage)}/{nameof(NewShoppingItemPage)}", typeof(NewShoppingItemPage));
-            Routing.RegisterRoute($"{nameof(ScanPage)}", typeof(ScanPage));
 
             CurrentItem = loginPage;
         }

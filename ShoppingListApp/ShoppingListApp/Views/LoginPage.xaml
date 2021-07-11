@@ -16,6 +16,6 @@
             <Label Text="Password" FontSize="Medium" />
             <Entry Text="{Binding Password}" FontSize="Medium" IsPassword="true" x:Name="password"  IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"/>
             <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-            <Button VerticalOptions="Center" Text="Scan Share Code" Clicked="Scan_Clicked"/>
+            <Button VerticalOptions="Center" Text="Scan Share Code" Command="{Binding ScanCommand}"/>
         </StackLayout>
 </ContentPage>

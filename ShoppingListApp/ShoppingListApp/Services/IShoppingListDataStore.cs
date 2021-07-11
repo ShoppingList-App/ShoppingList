@@ -14,7 +14,7 @@ namespace ShoppingListApp.Services
         Task<IEnumerable<StoreItem>> GetStoreItemsAsync();
 
         /* SEARCH */
-        Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, int limit);
+        Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, string barcode, int? limit);
 
         /* ADD */
         Task AddShoppingListAsync(ShoppingList shoppingList);

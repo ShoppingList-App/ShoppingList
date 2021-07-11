@@ -1,23 +1,19 @@
-﻿using Newtonsoft.Json;
-using ShoppingListApp.Models;
-using ShoppingListApp.Views;
+﻿using ShoppingListApp.Views;
 using System;
-using System.Diagnostics;
 using Xamarin.Forms;
-using ZXing;
 
 namespace ShoppingListApp.ViewModels
 {
-    [QueryProperty("Barcode", "Barcode")]
     public class LoginViewModel : BaseShoppingListViewModel
     {
         public Command LoginCommand { get; }
-        public Command<Result> ScanCommand { get; }
+        public Command ScanCommand { get; }
 
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
+            ScanCommand = new Command(OnScan);
 
             if (CheckConfiguration())
             {
@@ -75,6 +71,19 @@ namespace ShoppingListApp.ViewModels
                 }
             }
             catch { }
+        }
+
+        private async void OnScan(object obj)
+        {
+            Barcode = "";
+            ScanPage sp = new ScanPage();
+            sp.OnScan += Sp_OnScan;
+            await Application.Current.MainPage.Navigation.PushAsync(sp);
+        }
+
+        private void Sp_OnScan(string obj)
+        {
+            Barcode = obj;
         }
     }
 }

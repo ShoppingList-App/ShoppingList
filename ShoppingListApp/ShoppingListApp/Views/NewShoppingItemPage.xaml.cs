@@ -1,8 +1,6 @@
 ﻿using dotMorten.Xamarin.Forms;
 using ShoppingListApp.Models;
 using ShoppingListApp.ViewModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -40,7 +38,7 @@ namespace ShoppingListApp.Views
             {
                 //Set the ItemsSource to be your filtered dataset
                 //sender.ItemsSource = dataset;
-                sender.ItemsSource = await viewModel.SearchStoreItemsAsync(sender.Text);
+                await viewModel.SearchStoreItemsAsync(sender.Text);
             }
         }
 

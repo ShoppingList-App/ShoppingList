@@ -1,9 +1,7 @@
 ﻿using IO.Swagger.Api;
-using IO.Swagger.Client;
 using ShoppingListApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShoppingListApp.Services
@@ -99,7 +97,7 @@ namespace ShoppingListApp.Services
         {
             List<StoreItem> storeItems = await Task.Run(() =>
             {
-                return storeItemApi.GetStoreItems(null, null);
+                return storeItemApi.GetStoreItems(null, null, null);
             }).ConfigureAwait(false);
 
             return storeItems;
@@ -139,12 +137,12 @@ namespace ShoppingListApp.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, int limit)
+        public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, string barcode, int? limit)
         {
             List<StoreItem> storeItems = await Task.Run(() =>
             {
-                return storeItemApi.GetStoreItems(text, limit);
-            });
+                return storeItemApi.GetStoreItems(text, barcode, limit);
+            }).ConfigureAwait(false);
 
             return storeItems;
         }

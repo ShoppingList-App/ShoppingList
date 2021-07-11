@@ -21,9 +21,10 @@ namespace IO.Swagger.Api
         /// get all Store Items 
         /// </summary>
         /// <param name="text">return only Store Items matching &#x60;text&#x60; - matching all if not present</param>
+        /// <param name="barcode">return Store Items having &#x60;barcode&#x60; - matching all if not present</param>
         /// <param name="limit">return only &#x60;limit&#x60; numbers of Store Items - no limit if not present</param>
         /// <returns>List&lt;StoreItem&gt;</returns>
-        List<StoreItem> GetStoreItems (string text, int? limit);
+        List<StoreItem> GetStoreItems (string text, string barcode, int? limit);
         /// <summary>
         /// rebase sort key of all Sort Items 
         /// </summary>
@@ -131,7 +132,7 @@ namespace IO.Swagger.Api
         /// <param name="text">return only Store Items matching &#x60;text&#x60; - matching all if not present</param>
         /// <param name="limit">return only &#x60;limit&#x60; numbers of Store Items - no limit if not present</param>
         /// <returns>List&lt;StoreItem&gt;</returns>
-        public List<StoreItem> GetStoreItems (string text, int? limit)
+        public List<StoreItem> GetStoreItems (string text, string barcode, int? limit)
         {
     
             var path = "/storeItems";
@@ -143,8 +144,9 @@ namespace IO.Swagger.Api
             var fileParams = new Dictionary<String, FileParameter>();
             String postBody = null;
     
-             if (text != null) queryParams.Add("text", ApiClient.ParameterToString(text)); // query parameter
- if (limit != null) queryParams.Add("limit", ApiClient.ParameterToString(limit)); // query parameter
+            if (text != null) queryParams.Add("text", ApiClient.ParameterToString(text)); // query parameter
+            if (barcode != null) queryParams.Add("barcode", ApiClient.ParameterToString(barcode)); // query parameter
+            if (limit != null) queryParams.Add("limit", ApiClient.ParameterToString(limit)); // query parameter
                         
             // authentication setting, if any
             String[] authSettings = new String[] { "basicAuth" };

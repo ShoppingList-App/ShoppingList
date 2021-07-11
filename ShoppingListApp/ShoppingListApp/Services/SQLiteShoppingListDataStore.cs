@@ -90,10 +90,11 @@ namespace ShoppingListApp.Services
         }
 
         /* SEARCH */
-        public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, int limit)
+        public async Task<IEnumerable<StoreItem>> SearchStoreItemsAsync(string text, string barcode, int? limit)
         {
             string lowerText = text.ToLower();
-            return await db.Table<StoreItem>().Where(si => si.Text.ToLower().Contains(lowerText)).OrderBy(si => si.Text).Take(limit).ToListAsync();
+            // XXX: needs fix: maybe neither of the 3 parameters are set
+            return await db.Table<StoreItem>().Where(si => si.Text.ToLower().Contains(lowerText)).OrderBy(si => si.Text).Take(limit.Value).ToListAsync();
         }
 
         /* UPDATE */

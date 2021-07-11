@@ -1,12 +1,11 @@
 ﻿using ShoppingListApp.Models;
+using ShoppingListApp.Views;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ShoppingListApp.ViewModels
 {
-    [QueryProperty("Barcode", "Barcode")]
     class StoreItemViewModel : BaseShoppingListViewModel
     {
         private const int SEARCH_ITEM_LIMIT = 5;
@@ -31,7 +30,7 @@ namespace ShoppingListApp.ViewModels
 
         public async Task SearchStoreItemsAsync(string searchText)
         {
-            SearchResult = await ShoppingListDataStore.SearchStoreItemsAsync(searchText, SEARCH_ITEM_LIMIT);
+            SearchResult = await ShoppingListDataStore.SearchStoreItemsAsync(searchText, null, SEARCH_ITEM_LIMIT);
         }
 
         public IEnumerable<StoreItem> SearchResult
@@ -122,7 +121,14 @@ namespace ShoppingListApp.ViewModels
 
         private async void OnScan()
         {
-            await Shell.Current.GoToAsync("ScanPage");
+            ScanPage sp = new ScanPage();
+            sp.OnScan += Sp_OnScan;
+            await Application.Current.MainPage.Navigation.PushAsync(sp);
+        }
+
+        private void Sp_OnScan(string obj)
+        {
+            Barcode = obj;
         }
 
         private bool ValidateScan()

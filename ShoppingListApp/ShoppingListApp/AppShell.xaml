@@ -110,7 +110,6 @@
     -->
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" x:Name="loginPage" />
-        <ShellContent Route="ScanPage" ContentTemplate="{DataTemplate local:ScanPage}" x:Name="scanPage" />
     </TabBar>
 
     <!-- Optional Templates 

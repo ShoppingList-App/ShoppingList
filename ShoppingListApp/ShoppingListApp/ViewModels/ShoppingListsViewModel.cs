@@ -2,7 +2,6 @@
 using ShoppingListApp.Views;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -43,10 +42,7 @@ namespace ShoppingListApp.ViewModels
                     ShoppingLists.Add(item);
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            catch (Exception ex) { }
             finally
             {
                 IsBusy = false;
@@ -68,7 +64,6 @@ namespace ShoppingListApp.ViewModels
             if (shoppingList != null)
             {
                 // Das ist eine URL. ? ist der Beginn der Parameter
-                Debug.WriteLine($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Modify}");
                 await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Modify}");
             }
         }
@@ -78,7 +73,6 @@ namespace ShoppingListApp.ViewModels
             if (shoppingList != null)
             {
                 // Das ist eine URL. ? ist der Beginn der Parameter
-                Debug.WriteLine($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Shop}");
                 await Shell.Current.GoToAsync($"{nameof(ShoppingListPage)}?{nameof(ShoppingListViewModel.ShoppingListId)}={shoppingList.Id}&{nameof(ShoppingListViewModel.SelectedMode)}={ShoppingListViewModel.Mode.Shop}");
             }
         }

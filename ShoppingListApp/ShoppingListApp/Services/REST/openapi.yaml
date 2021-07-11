@@ -199,6 +199,11 @@ paths:
             present
           schema:
             type: string
+        - name: barcode
+          in: query
+          description: return Store Items having `barcode` - matching all if not present
+          schema:
+            type: string
         - name: limit
           in: query
           description: return only `limit` numbers of Store Items - no limit if not present
@@ -324,4 +329,4 @@ components:
   securitySchemes:
     basicAuth:
       type: http
-      scheme: basic
+      scheme: basic 

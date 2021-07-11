@@ -10,11 +10,16 @@
 
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
-            <forms:AutoSuggestBox PlaceholderText="New Article"
-                                  WidthRequest="200"
-                                  TextChanged="OnRebuyTextChanged"
-                                  SuggestionChosen="OnRebuySuggestionChosen"
-                                  Text="{Binding Text, Mode=TwoWay}"/>
+            <StackLayout Orientation="Horizontal">
+                <forms:AutoSuggestBox PlaceholderText="New Article"
+                                      WidthRequest="200"
+                                      TextChanged="OnRebuyTextChanged"
+                                      SuggestionChosen="OnRebuySuggestionChosen"
+                                      Text="{Binding Text, Mode=TwoWay}"
+                                      HorizontalOptions="FillAndExpand"
+                                      ItemsSource="{Binding SearchResult}"/>
+                <Button Text="Scan" Command="{Binding ScanCommand}"/>
+            </StackLayout>
             <Grid Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

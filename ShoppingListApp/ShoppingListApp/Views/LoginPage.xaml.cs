@@ -41,11 +41,5 @@ namespace ShoppingListApp.Views
                 password.Text = "";
             }
         }
-
-        private void Scan_Clicked(object sender, EventArgs e)
-        {
-            model.Barcode = "";
-            Shell.Current.GoToAsync(nameof(ScanPage));
-        }
     }
 }

@@ -7,6 +7,8 @@ namespace ShoppingListApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScanPage : ContentPage
     {
+        public event Action<string> OnScan;
+
         public ScanPage()
         {
             InitializeComponent();
@@ -14,12 +16,16 @@ namespace ShoppingListApp.Views
 
         private void Zxing_OnScanResult(ZXing.Result result)
         {
-            _ = Shell.Current.GoToAsync("..?Barcode=" + result.Text);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                OnScan?.Invoke(result.Text);
+                _ = Navigation.PopAsync();
+            });
         }
 
-        private void ScanCancel_Clicked(object sender, EventArgs e)
+        private async void ScanCancel_Clicked(object sender, EventArgs e)
         {
-            _ = Shell.Current.GoToAsync("..");
+            _ = await Navigation.PopAsync();
         }
     }
 }
