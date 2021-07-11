@@ -32,16 +32,7 @@ namespace ShoppingListApp.ViewModels
 
         public string Host
         {
-            set
-            {
-                if (Uri.TryCreate(value, UriKind.Absolute, out _))
-                {
-                    Application.Current.Properties["host"] = value;
-                } else
-                {
-                    Application.Current.Properties["host"] = "";
-                }
-            }
+            set => Application.Current.Properties["host"] = Uri.TryCreate(value, UriKind.Absolute, out _) ? value : "";
         }
 
         public string Username
