@@ -30,15 +30,16 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid x:DataType="model:ShoppingItem" Padding="5,5,5,0" Margin="0,20" ColumnSpacing="0">
+                    <Grid x:DataType="model:ShoppingItem" Padding="5,5,5,0" Margin="0,10" ColumnSpacing="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Text="{Binding StoreItem.Text}"
-                               Padding="10,0,0,0"
+                               Padding="8,0,0,0"
                                Style="{StaticResource LabelButton}" 
                                VerticalTextAlignment="Center"
+                               FontSize="20"
                                LineBreakMode="WordWrap">
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label"
@@ -52,6 +53,7 @@
                                LineBreakMode="WordWrap" 
                                Style="{StaticResource LabelButton}"
                                VerticalTextAlignment="Center"
+                               FontSize="20"
                                Grid.Column="1">
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label"
